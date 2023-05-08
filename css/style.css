@@ -1,6 +1,7 @@
-html, body {
-  margin: 0px;
-  height: 100%;
+html,
+body {
+	margin: 0px;
+	height: 100%;
 }
 
 #sidebar {
@@ -12,39 +13,30 @@ html, body {
 	grid-area: content;
 }
 
-.header {
-	grid-area: header;
-	font-family: Helvetica, sans-serif
-}
-
-.footer{
-  grid-area: footer;
-}
-
-.sideBarItem{
+.sideBarItem {
 	max-height: 50px;
 	max-width: 50px;
-	padding:5px;
+	padding: 5px;
 }
 
-.sideBarItem img{
+.sideBarItem img {
 	max-height: 50px;
-	max-Width:50px;
+	max-Width: 50px;
 }
 
-.colourPalette{
+.colourPalette {
 	grid-area: colourP;
-	display:flex;
-	flex-direction:grid;
+	display: flex;
+	flex-direction: grid;
 	flex-flow: wrap;
 }
 
-.options{
+.options {
 	grid-area: options;
 	padding: 15px;
 }
 
-.colourSwatches{
+.colourSwatches {
 	box-sizing: border-box;
 	width: 40px;
 	height: 40px;
@@ -53,25 +45,136 @@ html, body {
 	margin: 5px;
 }
 
+.wrapper {
+	display: grid;
+	height: 100%;
+	grid-template-columns: 70px 230px minmax(500px, 1fr);
+	grid-template-rows: min-content 1fr 150px min-content;
+	grid-template-areas:
+		"header header header"
+		"sidebar content content"
+		"colourP colourP options"
+		"footer footer footer";
+	background-color: #fff;
+	color: #444;
+}
 
-	.wrapper {
-		display: grid;
-		height: 100%;
-		grid-template-columns: 70px 230px  minmax(500px, 1fr);
-		grid-template-rows: 35px minmax(500px, 1fr) 160px;
-		grid-template-areas:
-               "header header header"
-				"sidebar content content"
-                "colourP colourP options";
-		background-color: #fff;
-		color: #444;
-	}
 .box {
-  background-color: #444;
-  color: #fff;
-  font-size: 150%;
+	background-color: #444;
+	color: #fff;
+	font-size: 150%;
 }
 
 .header {
-  background-color: #999;
+	grid-area: header;
+	font-family: Helvetica, sans-serif;
+	background-color: #999;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background-color: black;
+	padding: 0.25em 0.4em;
+}
+
+.header>h4 {
+	margin: 0px;
+
+	font-weight: normal;
+	font-family: 'Inter';
+}
+
+.helperButtons {
+	border: none;
+	border-radius: 1em;
+
+	background-color: rgba(255, 255, 255, 0.4);
+	color: black;
+
+	height: auto;
+	padding: 6px 16px;
+
+	font-size: 0.75em;
+	font-family: 'Inter';
+
+	transition: background-color 0.25s ease;
+}
+
+.helperButtons:hover {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+.helperButtonsSelected {
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.helperButtonsSelected:hover {
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.footer {
+	grid-area: footer;
+
+	display: flex;
+	flex-direction: row;
+	column-gap: 0.5em;
+
+	height: auto;
+	padding: 6px 16px;
+
+	background-color: black;
+}
+
+.toolOptionsText {
+	display: flex;
+	height: auto;
+	margin: auto 0px;
+
+	font-weight: normal;
+	font-family: 'Inter';
+	align-items: center;
+
+	color: white !important;
+}
+
+.toolOptionsWrapper {
+	display: flex;
+	flex-direction: row;
+	column-gap: 0.4em;
+	align-items: center;
+
+	border-radius: 1em;
+	padding-left: 0.4em;
+	padding-right: 0.4em;
+
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+.colorSelector {
+	border: none;
+	border-radius: 1em;
+	border-width: 0px;
+
+	background-color: transparent !important;
+	color: black;
+
+	height: 27px;
+	width: 24px;
+	padding: 0px;
+	/* margin: auto; */
+	margin: auto 0px;
+}
+
+.textSelector {
+	border: none;
+	border-width: 0px;
+
+	background-color: transparent !important;
+	color: white;
+
+	height: auto;
+	width: 3em;
+	padding: 0px;
+	margin: auto 0px;
+
+	font-family: 'Inter';
 }
