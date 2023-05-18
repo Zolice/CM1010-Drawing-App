@@ -4,26 +4,6 @@ body {
 	height: 100%;
 }
 
-#sidebar {
-	grid-area: sidebar;
-	overflow-y: scroll;
-}
-
-#content {
-	grid-area: content;
-}
-
-.sideBarItem {
-	max-height: 50px;
-	max-width: 50px;
-	padding: 5px;
-}
-
-.sideBarItem img {
-	max-height: 50px;
-	max-Width: 50px;
-}
-
 .colourPalette {
 	grid-area: colourP;
 	display: flex;
@@ -46,41 +26,91 @@ body {
 }
 
 .wrapper {
-	display: grid;
 	height: 100%;
-	grid-template-columns: 70px 230px minmax(500px, 1fr);
-	grid-template-rows: min-content 1fr 150px min-content;
+	width: 100%;
+
+	display: grid;
+	grid-template-rows: min-content 1fr min-content;
 	grid-template-areas:
 		"header header header"
-		"sidebar content content"
-		"colourP colourP options"
+		"content content content"
 		"footer footer footer";
 	background-color: #fff;
 	color: #444;
 }
 
-.box {
-	background-color: #444;
-	color: #fff;
-	font-size: 150%;
-}
-
 .header {
 	grid-area: header;
 	font-family: Helvetica, sans-serif;
-	background-color: #999;
+
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+
+	/* display: grid;
+	grid-template-columns: 1fr max-content 1fr; */
+
 	background-color: black;
-	padding: 0.25em 0.4em;
+	padding: 0 0.6em;
 }
 
-.header>h4 {
+.header>h3 {
+	width: fit-content;
 	margin: 0px;
+	margin-top: auto;
+	margin-bottom: auto;
 
 	font-weight: normal;
 	font-family: 'Inter';
+
+	color: white;
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: row;
+	column-gap: 0.4em;
+	padding: 0.4em 0;
+
+	height: auto;
+}
+
+.toolButton {
+	border-radius: 0.8em;
+
+	border: 0.3em solid rgba(127, 127, 127);
+	background-color: rgba(127, 127, 127);
+
+	height: 2em;
+	width: 2em;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.toolButton:hover {
+	background-color: rgba(255, 255, 255);
+	border: 0.3em solid rgba(255, 255, 255);
+}
+
+.toolButtonSelected{
+	background-color: rgba(200, 200, 200);
+	border: 0.3em solid rgba(255, 255, 255);
+	
+}
+
+.toolButton>img {
+	max-height: 1.7em;
+	max-Width: 1.7em;
+}
+
+.helperButtonWrapper {
+	width: fit-content;
+
+	display: flex;
+	flex-direction: row;
+	column-gap: 0.5em;
 }
 
 .helperButtons {
@@ -92,8 +122,10 @@ body {
 
 	height: auto;
 	padding: 6px 16px;
+	margin-top: auto;
+	margin-bottom: auto;
 
-	font-size: 0.75em;
+	font-size: 1em;
 	font-family: 'Inter';
 
 	transition: background-color 0.25s ease;
@@ -111,6 +143,31 @@ body {
 	background-color: rgba(255, 255, 255, 1);
 }
 
+.contentWrapper {
+	grid-area: content;
+
+	background-color: #444;
+
+	overflow-y: auto;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.content {
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#defaultCanvas0 {
+	margin: 0;
+}
+
 .footer {
 	grid-area: footer;
 
@@ -118,8 +175,8 @@ body {
 	flex-direction: row;
 	column-gap: 0.5em;
 
-	height: auto;
-	padding: 6px 16px;
+	height: 40px;
+	padding: 0 16px;
 
 	background-color: black;
 }
@@ -141,12 +198,19 @@ body {
 	flex-direction: row;
 	column-gap: 0.4em;
 	align-items: center;
+	height: 27px;
 
 	border-radius: 1em;
-	padding-left: 0.4em;
-	padding-right: 0.4em;
+	padding: 0 0.6em;
+
+	margin: 0.4em 0;
 
 	background-color: rgba(255, 255, 255, 0.4);
+}
+
+.toolOptionsButton:hover {
+	/* set mouse on hover*/
+	cursor: pointer;
 }
 
 .colorSelector {

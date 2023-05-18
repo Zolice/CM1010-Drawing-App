@@ -8,12 +8,14 @@ function Toolbox() {
 
 	var toolbarItemClick = function() {
 		//remove any existing borders
-		var items = selectAll(".sideBarItem");
+		var items = selectAll(".toolButton");
+		console.log(items)
 		for (var i = 0; i < items.length; i++) {
-			items[i].style('border', '0')
+			// items[i].style('border', '0')
+			items[i].removeClass('toolButtonSelected');
 		}
 
-		var toolName = this.id().split("sideBarItem")[0];
+		var toolName = this.id().split("ToolButton")[0];
 		self.selectTool(toolName);
 
 		//call loadPixels to make sure most recent changes are saved to pixel array
@@ -24,8 +26,8 @@ function Toolbox() {
 	//add a new tool icon to the html page
 	var addToolIcon = function(icon, name) {
 		var sideBarItem = createDiv("<img src='" + icon + "'></div>");
-		sideBarItem.class('sideBarItem')
-		sideBarItem.id(name + "sideBarItem")
+		sideBarItem.class('toolButton')
+		sideBarItem.id(name + "ToolButton")
 		sideBarItem.parent('sidebar');
 		sideBarItem.mouseClicked(toolbarItemClick);
 
@@ -59,7 +61,7 @@ function Toolbox() {
 				}
 				//select the tool and highlight it on the toolbar
 				this.selectedTool = this.tools[i];
-				select("#" + toolName + "sideBarItem").style("border", "2px solid blue");
+				select("#" + toolName + "ToolButton").addClass('toolButtonSelected');
 
 				//if the tool has an options area. Populate it now.
 				if (this.selectedTool.hasOwnProperty("populateOptions")) {
