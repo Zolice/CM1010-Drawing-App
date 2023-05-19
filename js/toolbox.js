@@ -9,7 +9,6 @@ function Toolbox() {
 	var toolbarItemClick = function() {
 		//remove any existing borders
 		var items = selectAll(".toolButton");
-		console.log(items)
 		for (var i = 0; i < items.length; i++) {
 			// items[i].style('border', '0')
 			items[i].removeClass('toolButtonSelected');

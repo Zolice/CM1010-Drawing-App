@@ -113,22 +113,31 @@ function mirrorDrawTool() {
 	this.unselectTool = function () {
 		updatePixels();
 		//clear options
-		select(".options").html("");
+		select(".footer").html("")
 	};
 
 	//adds a button and click handler to the options area. When clicked
 	//toggle the line of symmetry between horizonatl to vertical
 	this.populateOptions = function () {
-		// select(".footer").html(
-		// 	"<button id='directionButton'>Make Horizontal</button>");
-
-		// Create a button
+		// Create a button element
 		let button = document.createElement('div')
 		button.id = 'directionButton'
 		button.className = 'toolOptionsWrapper toolOptionsButton'
-		button.innerHTML = '<h5 class="toolOptionsSetting toolOptionsText" id="mirrorDrawToolDirection">Make Horizontal</h5>'
-		button.onclick = function () {
+
+		// Create a text element
+		let text = document.createElement('h5')
+		text.className = 'toolOptionsSetting toolOptionsText'
+		text.id = 'mirrorDrawToolDirection'
+		text.innerHTML = 'Make Horizontal'
+
+		// Append text to button
+		button.appendChild(text)
+
+		// Add button click event listener
+		button.onclick = () => {
 			let button = select("#mirrorDrawToolDirection");
+
+			// Change the orientation of the tool
 			if (self.axis == "x") {
 				self.axis = "y";
 				self.lineOfSymmetry = height / 2;
@@ -140,25 +149,12 @@ function mirrorDrawTool() {
 			}
 		}
 
-		console.log(button.lang)
-
-		console.log(select(".footer"))
-		// select(".footer").html('<div id="directionButton" class="toolOptionsWrapper toolOptionsButton"><h5 class="toolOptionsSetting toolOptionsText" id="colourOption">Make Horizontal</h5></div>')
+		// Empty the footer and append butto
+		select(".footer").html("")
 		select(".footer").elt.appendChild(button)
-		console.log(select(".footer").elt.innerHTML)
 
-		// 	//click handler
-		// select("#directionButton").mouseClicked(function () {
-		// 	let button = select("#mirrorDrawToolDirection");
-		// 	if (self.axis == "x") {
-		// 		self.axis = "y";
-		// 		self.lineOfSymmetry = height / 2;
-		// 		button.html('Make Vertical');
-		// 	} else {
-		// 		self.axis = "x";
-		// 		self.lineOfSymmetry = width / 2;
-		// 		button.html('Make Horizontal');
-		// 	}
-		// });
+		// Actvate the tool
+		self.axis = "x";
+		self.lineOfSymmetry = width / 2;
 	};
 }
