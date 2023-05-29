@@ -98,6 +98,10 @@ body {
 	max-height: 100%;
 
 	background-color: white;
+
+	border-width: 0.12em;
+	border-style: dashed;
+	border-color: black;
 }
 
 .sideOptionsFooter {
@@ -182,6 +186,8 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	transition: background-color 0.25s ease, border 0.25s ease;
 }
 
 .toolButton:hover {
