@@ -1,14 +1,107 @@
-html,
-body {
+html {
 	margin: 0px;
 	height: 100%;
 }
 
-.colourPalette {
-	grid-area: colourP;
+body {
+	height: 100%;
+	width: 100%;
+
 	display: flex;
-	flex-direction: grid;
-	flex-flow: wrap;
+	flex-direction: row;
+
+	margin: 0px;
+}
+
+.sideOptionsContainer {
+	height: 100%;
+	width: 560px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	transition: visibility 1s ease, max-width 1s ease;
+}
+
+.sideOptionsContainerHidden {
+	visibility: hidden;
+	width: 0px;
+}
+
+.sideOptions {
+	height: 100%;
+	width: 100%;
+
+	background-color: #444;
+
+	display: grid;
+	grid-template-rows: min-content 1fr min-content;
+	grid-template-areas:
+		"header header header"
+		"content content content"
+		"footer footer footer";
+}
+
+.sideOptionsColor {
+	background-color: #444 !important;
+}
+
+.sideOptionsContent {
+	grid-area: content;
+
+	padding: 0 0.6em;
+}
+
+.sideOptionsLine {
+	height: fit-content;
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	column-gap: 0.4em;
+}
+
+.sideOptionsInput {
+	width: 4em !important;
+}
+
+.sideOptionsPreviewContainer {
+	height: 50%;
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 0.4em;
+
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.sideOptionsPreviewText {
+	font-family: 'Inter';
+	font-weight: normal;
+	color: white;
+	text-align: center;
+
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.sideOptionsPreview {
+	aspect-ratio: 3/2;
+
+	max-width: 100%;
+	max-height: 100%;
+
+	background-color: white;
+}
+
+.sideOptionsFooter {
+	flex-direction: row-reverse !important;
 }
 
 .options {
@@ -40,6 +133,8 @@ body {
 }
 
 .header {
+	height: 54px;
+
 	grid-area: header;
 	font-family: Helvetica, sans-serif;
 
@@ -94,10 +189,10 @@ body {
 	border: 0.3em solid rgba(255, 255, 255);
 }
 
-.toolButtonSelected{
+.toolButtonSelected {
 	background-color: rgba(200, 200, 200);
 	border: 0.3em solid rgba(255, 255, 255);
-	
+
 }
 
 .toolButton>img {
@@ -148,7 +243,7 @@ body {
 
 	background-color: #444;
 
-	overflow-y: auto;
+	overflow: auto;
 
 	display: flex;
 	justify-content: center;
@@ -219,7 +314,7 @@ body {
 	border-width: 0px;
 
 	background-color: transparent !important;
-	color: black;
+	/* color: black; */
 
 	height: 27px;
 	width: 24px;

@@ -23,6 +23,45 @@
 </head>
 
 <body>
+  <div id="sideOptionsContainer" class="sideOptionsContainer sideOptionsContainerHidden">
+    <div class="sideOptions">
+      <div class="header sideOptionsColor">
+        <h3>Create New</h3>
+      </div>
+
+      <div class="sideOptionsContent">
+        <div class="sideOptionsLine">
+          <h5 class="toolOptionsType toolOptionsText">Width</h5>
+          <div class="toolOptionsWrapper">
+            <input class="textSelector sideOptionsInput" type="number" id="createWidth" value="10" min="1" />
+          </div>
+
+          <h5 class="toolOptionsType toolOptionsText">Height</h5>
+          <div class="toolOptionsWrapper">
+            <input class="textSelector sideOptionsInput" type="number" id="createHeight" value="10" min="1" step="1" />
+          </div>
+        </div>
+
+        <div class="sideOptionsLine">
+          <h5 class="toolOptionsType toolOptionsText">Background</h5>
+          <div class="toolOptionsWrapper">
+            <h5 class="toolOptionsSetting toolOptionsText">Colour</h5>
+            <input class="colorSelector" type="color" id="backgroundColour" value="#FFFFFF" />
+          </div>
+        </div>
+
+        <h5 class="sideOptionsPreviewText">Preview</h5>
+        <div class="sideOptionsPreviewContainer">
+          <div class="sideOptionsPreview" id="sideOptionsPreview" style="width: 100%; aspect-ratio: 3/2;"></div>
+        </div>
+      </div>
+
+      <div class="footer sideOptionsColor sideOptionsFooter">
+        <button class="helperButtons" id="createButton">Create</button>
+        <button class="helperButtons" id="cancelButton">Cancel</button>
+      </div>
+    </div>
+  </div>
   <div class="wrapper">
     <div class="header">
       <h3>CM1010 Drawing App</h3>
@@ -30,7 +69,7 @@
       <div class="sidebar" id="sidebar"></div>
 
       <div class="helperButtonWrapper">
-        <button class="helperButtons" id="clearButton">Clear</button>
+        <button class="helperButtons" id="clearButton">New</button>
         <button class="helperButtons" id="saveImageButton">Save Image</button>
       </div>
     </div>
@@ -41,18 +80,18 @@
     <div class="box options" style="display: none"></div>
 
     <div class="footer">
-      <h5 class="toolOptionsType toolOptionsText" id="colourOption">Fill</h5>
+      <h5 class="toolOptionsType toolOptionsText">Fill</h5>
       <div class="toolOptionsWrapper">
-        <h5 class="toolOptionsSetting toolOptionsText" id="colourOption">Colour:</h5>
+        <h5 class="toolOptionsSetting toolOptionsText">Colour:</h5>
         <input class="colorSelector" type="color" id="color" />
-        <h5 class="toolOptionsSetting toolOptionsText" id="colourOption">Size:</h5>
+        <h5 class="toolOptionsSetting toolOptionsText">Size:</h5>
         <input class="colorSelector" type="color" id="color" />
       </div>
-      <h5 class="toolOptionsType toolOptionsText" id="colourOption">Stroke</h5>
+      <h5 class="toolOptionsType toolOptionsText">Stroke</h5>
       <div class="toolOptionsWrapper">
-        <h5 class="toolOptionsSetting toolOptionsText" id="colourOption">Colour</h5>
+        <h5 class="toolOptionsSetting toolOptionsText">Colour</h5>
         <input class="colorSelector" type="color" id="color" />
-        <h5 class="toolOptionsSetting toolOptionsText" id="colourOption">Size:</h5>
+        <h5 class="toolOptionsSetting toolOptionsText">Size:</h5>
         <input class="textSelector" type="number" id="color" value="10" min="0.1" max="99.9" step="0.1" />
       </div>
     </div>
