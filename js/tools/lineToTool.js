@@ -2,7 +2,7 @@
 //the a line to the current mouse position before drawing the line to the 
 //pixel array.
 function LineToTool(){
-	this.icon = "assets/lineTo.jpg";
+	this.icon = "assets/lineTo.png";
 	this.name = "LineTo";
 
 	var startMouseX = -1;

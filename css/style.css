@@ -1,50 +1,119 @@
-html, body {
-  margin: 0px;
-  height: 100%;
+html {
+	margin: 0px;
+	height: 100%;
 }
 
-#sidebar {
-	grid-area: sidebar;
-	overflow-y: scroll;
+body {
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+
+	margin: 0px;
 }
 
-#content {
+.sideOptionsContainer {
+	height: 100%;
+	width: 560px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	transition: visibility 1s ease, max-width 1s ease;
+}
+
+.sideOptionsContainerHidden {
+	visibility: hidden;
+	width: 0px;
+}
+
+.sideOptions {
+	height: 100%;
+	width: 100%;
+
+	background-color: #444;
+
+	display: grid;
+	grid-template-rows: min-content 1fr min-content;
+	grid-template-areas:
+		"header header header"
+		"content content content"
+		"footer footer footer";
+}
+
+.sideOptionsColor {
+	background-color: #444 !important;
+}
+
+.sideOptionsContent {
 	grid-area: content;
+
+	padding: 0 0.6em;
 }
 
-.header {
-	grid-area: header;
-	font-family: Helvetica, sans-serif
+.sideOptionsLine {
+	height: fit-content;
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	column-gap: 0.4em;
 }
 
-.footer{
-  grid-area: footer;
+.sideOptionsInput {
+	width: 4em !important;
 }
 
-.sideBarItem{
-	max-height: 50px;
-	max-width: 50px;
-	padding:5px;
+.sideOptionsPreviewContainer {
+	height: 50%;
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 0.4em;
+
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
-.sideBarItem img{
-	max-height: 50px;
-	max-Width:50px;
+.sideOptionsPreviewText {
+	font-family: 'Inter';
+	font-weight: normal;
+	color: white;
+	text-align: center;
+
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
-.colourPalette{
-	grid-area: colourP;
-	display:flex;
-	flex-direction:grid;
-	flex-flow: wrap;
+.sideOptionsPreview {
+	aspect-ratio: 3/2;
+
+	max-width: 100%;
+	max-height: 100%;
+
+	background-color: white;
+
+	border-width: 0.12em;
+	border-style: dashed;
+	border-color: black;
 }
 
-.options{
+.sideOptionsFooter {
+	flex-direction: row-reverse !important;
+}
+
+.options {
 	grid-area: options;
 	padding: 15px;
 }
 
-.colourSwatches{
+.colourSwatches {
 	box-sizing: border-box;
 	width: 40px;
 	height: 40px;
@@ -53,25 +122,224 @@ html, body {
 	margin: 5px;
 }
 
+.wrapper {
+	height: 100%;
+	width: 100%;
 
-	.wrapper {
-		display: grid;
-		height: 100%;
-		grid-template-columns: 70px 230px  minmax(500px, 1fr);
-		grid-template-rows: 35px minmax(500px, 1fr) 160px;
-		grid-template-areas:
-               "header header header"
-				"sidebar content content"
-                "colourP colourP options";
-		background-color: #fff;
-		color: #444;
-	}
-.box {
-  background-color: #444;
-  color: #fff;
-  font-size: 150%;
+	display: grid;
+	grid-template-rows: min-content 1fr min-content;
+	grid-template-areas:
+		"header header header"
+		"content content content"
+		"footer footer footer";
+	background-color: #fff;
+	color: #444;
 }
 
 .header {
-  background-color: #999;
+	height: 54px;
+
+	grid-area: header;
+	font-family: Helvetica, sans-serif;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	/* display: grid;
+	grid-template-columns: 1fr max-content 1fr; */
+
+	background-color: black;
+	padding: 0 0.6em;
+}
+
+.header>h3 {
+	width: fit-content;
+	margin: 0px;
+	margin-top: auto;
+	margin-bottom: auto;
+
+	font-weight: normal;
+	font-family: 'Inter';
+
+	color: white;
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: row;
+	column-gap: 0.4em;
+	padding: 0.4em 0;
+
+	height: auto;
+}
+
+.toolButton {
+	border-radius: 0.8em;
+
+	border: 0.3em solid rgba(127, 127, 127);
+	background-color: rgba(127, 127, 127);
+
+	height: 2em;
+	width: 2em;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	transition: background-color 0.25s ease, border 0.25s ease;
+}
+
+.toolButton:hover {
+	background-color: rgba(255, 255, 255);
+	border: 0.3em solid rgba(255, 255, 255);
+}
+
+.toolButtonSelected {
+	background-color: rgba(200, 200, 200);
+	border: 0.3em solid rgba(255, 255, 255);
+
+}
+
+.toolButton>img {
+	max-height: 1.7em;
+	max-Width: 1.7em;
+}
+
+.helperButtonWrapper {
+	width: fit-content;
+
+	display: flex;
+	flex-direction: row;
+	column-gap: 0.5em;
+}
+
+.helperButtons {
+	border: none;
+	border-radius: 1em;
+
+	background-color: rgba(255, 255, 255, 0.4);
+	color: black;
+
+	height: auto;
+	padding: 6px 16px;
+	margin-top: auto;
+	margin-bottom: auto;
+
+	font-size: 1em;
+	font-family: 'Inter';
+
+	transition: background-color 0.25s ease;
+}
+
+.helperButtons:hover {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+.helperButtonsSelected {
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.helperButtonsSelected:hover {
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.contentWrapper {
+	grid-area: content;
+
+	background-color: #444;
+
+	overflow: auto;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.content {
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#defaultCanvas0 {
+	margin: 0;
+}
+
+.footer {
+	grid-area: footer;
+
+	display: flex;
+	flex-direction: row;
+	column-gap: 0.5em;
+
+	height: 40px;
+	padding: 0 16px;
+
+	background-color: black;
+}
+
+.toolOptionsText {
+	display: flex;
+	height: auto;
+	margin: auto 0px;
+
+	font-weight: normal;
+	font-family: 'Inter';
+	align-items: center;
+
+	color: white !important;
+}
+
+.toolOptionsWrapper {
+	display: flex;
+	flex-direction: row;
+	column-gap: 0.4em;
+	align-items: center;
+	height: 27px;
+
+	border-radius: 1em;
+	padding: 0 0.6em;
+
+	margin: 0.4em 0;
+
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+.toolOptionsButton:hover {
+	/* set mouse on hover*/
+	cursor: pointer;
+}
+
+.colorSelector {
+	border: none;
+	border-radius: 1em;
+	border-width: 0px;
+
+	background-color: transparent !important;
+	/* color: black; */
+
+	height: 27px;
+	width: 24px;
+	padding: 0px;
+	/* margin: auto; */
+	margin: auto 0px;
+}
+
+.textSelector {
+	border: none;
+	border-width: 0px;
+
+	background-color: transparent !important;
+	color: white;
+
+	height: auto;
+	width: 3em;
+	padding: 0px;
+	margin: auto 0px;
+
+	font-family: 'Inter';
 }

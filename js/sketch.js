@@ -4,13 +4,16 @@ var toolbox = null;
 var colourP = null;
 var helpers = null;
 
-
-function setup() {
-
+window.onload = function() {
 	//create a canvas to fill the content div from index.html
 	canvasContainer = select('#content');
-	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
+	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height - 4); //subtract 4 for the border
 	c.parent("content");
+
+	background(255);
+}
+
+function setup() {
 
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();
@@ -24,7 +27,6 @@ function setup() {
 	toolbox.addTool(new LineToTool());
 	toolbox.addTool(new SprayCanTool());
 	toolbox.addTool(new mirrorDrawTool());
-	background(255);
 
 }
 
@@ -38,4 +40,9 @@ function draw() {
 	} else {
 		alert("it doesn't look like your tool has a draw method!");
 	}
+}
+
+// Open sidebar containing 
+function ConfigureCanvas() {
+	
 }
