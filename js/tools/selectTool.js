@@ -4,7 +4,21 @@ class selectTool extends Tool {
 
         this.name = "Select"
         this.description = "Select an area"
-        // this.icon = "assets/select.png"
+        this.icon = "assets/selectTool.png"
+
+        this.strokeColor = color(0, 0, 0, 204) // 80% Transparent
+        this.strokeWeight = 2
+        this.fillColor = color(0, 0, 0, 0) // 100% Transparent
+        this.lineDash = [0, 8]
+        this.buttonColor = color(0, 0, 0, 204) // 80% Transparent
+        this.buttonSize = 5
+
+        this.initialize()
+    }
+
+    initialize() {
+        this.previousMouseX = -1
+        this.previousMouseY = -1
 
         this.original = []
         this.edited = []
@@ -21,27 +35,18 @@ class selectTool extends Tool {
         this.corners = [] // top-left, top-right, bottom-right, bottom-left
         this.sides = [] // top, right, bottom, left
 
-        this.strokeColor = color(0, 0, 0, 204) // 80% Transparent
-        this.strokeWeight = 2
-        this.fillColor = color(0, 0, 0, 0) // 100% Transparent
-        this.lineDash = [0, 8]
-        this.buttonColor = color(0, 0, 0, 204) // 80% Transparent
-        this.buttonSize = 5
-
         this.dragging = false
 
-        this.initialize()
-    }
-
-    initialize() {
         // This is used to provide compatibility for classes to work with sketch.js and toolbox.js
         this.draw = () => { this.drawing() }
+        this.unselectTool = () => { this.reset() }
+        this.populateOptions = () => { this.populateOption() }
     }
 
     // TODO: Rename this to draw() when changing other original tools to classes
     drawing() {
         // Check if the mouse is pressed
-        if (mouseIsPressed) {
+        if (mouseIsPressed && mouseInBounds()) {
             // Check if selection has been made
             // Do this by checking this.selectedPixels
             if (this.selectedPixels.width <= 0) {
@@ -77,16 +82,6 @@ class selectTool extends Tool {
             }
             // Check if the selection is made
             else {
-                // Check if the mouse is clicking on the corner/side buttons
-                // Check if the mouse is clicking on the corners
-                this.corners.forEach(corner => {
-                    if (dist(mouseX, mouseY, corner.x, corner.y) <= (this.buttonSize / 2)) {
-                        console.log("Corner")
-                    }
-                })
-
-                // Check if the mouse is clicking on the sides
-
                 // Check if the mouse is clicking on the selection
                 if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
                     // Check if this is the first instance of clicking the selection
@@ -179,6 +174,14 @@ class selectTool extends Tool {
             console.log(this.selectedWidth)
             console.log(this.selectedHeight)
 
+            // Check if selection contains any pixels
+            if (this.selectedWidth <= 0 || this.selectedHeight <= 0) {
+                // There is nothing selected, it's a straight line selection
+                // Reset the tool
+                console.log("Condition met")
+                return this.reset()
+            }
+
             // Get the pixels of the selection from this.original
             // Re-create this.selectedPixels using the correct dimensions
             this.selectedPixels = createImage(this.selectedWidth, this.selectedHeight)
@@ -226,7 +229,10 @@ class selectTool extends Tool {
         }
     }
 
-    drawImage() {
+    drawImage(border = true) {
+        // Check if there's a selection
+        if (this.selectedPixels.width <= 0) return
+
         // Set fill and stroke
         // Set Stroke
         stroke(this.strokeColor)
@@ -235,12 +241,13 @@ class selectTool extends Tool {
         // Set fill
         fill(this.fillColor)
 
-
         // Make the rectangle have dotted lines
         drawingContext.setLineDash(this.lineDash)
 
+        // Draw the border
+        if (border) rect(this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight)
+
         // Draw the image to the canvas
-        rect(this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight)
         image(this.selectedPixels, this.selectedX, this.selectedY)
 
         // Draw buttons at the 4 corners to adjust the size
@@ -252,12 +259,59 @@ class selectTool extends Tool {
         stroke(this.buttonColor)
 
         // Draw the buttons
-        this.corners.forEach(corner => {
-            ellipse(corner.x, corner.y, this.buttonSize, this.buttonSize)
-        })
+        if (border) {
+            this.corners.forEach(corner => {
+                ellipse(corner.x, corner.y, this.buttonSize, this.buttonSize)
+            })
 
-        this.sides.forEach(side => {
-            ellipse(side.x, side.y, this.buttonSize, this.buttonSize)
-        })
+            this.sides.forEach(side => {
+                ellipse(side.x, side.y, this.buttonSize, this.buttonSize)
+            })
+        }
+    }
+
+    // Rename this to unselectTool() when changing other original tools to classes
+    reset() {
+        // Reset the image
+        // Copy this.edited to pixels[] to update the canvas
+        pixels = this.edited.slice()
+
+        // Push the modifications to pixels
+        updatePixels()
+
+        // Draw the image to the canvas
+        // Without the border
+        this.drawImage(false)
+
+        // Save the image
+        loadPixels()
+
+        // Reset this tool
+        this.initialize()
+    }
+
+    // Rename this to populateOptions() when changing other original tools to classes
+    populateOption() {
+        let button = document.createElement('div')
+        button.id = 'resetButton'
+        button.className = 'toolOptionsWrapper toolOptionsButton'
+
+        // Create a text element
+        let text = document.createElement('h5')
+        text.className = 'toolOptionsSetting toolOptionsText'
+        text.id = 'mirrorDrawToolDirection'
+        text.innerHTML = 'Remove Selection'
+
+        // Append text to button
+        button.appendChild(text)
+
+        // Add button click event listener
+        button.onclick = () => {
+            this.reset()
+        }
+
+        // Empty the footer and append button
+        select("#footer").html("")
+        select("#footer").elt.appendChild(button)
     }
 }
