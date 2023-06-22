@@ -4,7 +4,7 @@ class selectTool extends Tool {
 
         this.name = "Select"
         this.description = "Select an area"
-        // this.icon = "assets/select.png"
+        this.icon = "assets/selectTool.png"
 
         this.initialize()
     }
