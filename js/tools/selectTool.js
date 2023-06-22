@@ -6,6 +6,13 @@ class selectTool extends Tool {
         this.description = "Select an area"
         this.icon = "assets/selectTool.png"
 
+        this.strokeColor = color(0, 0, 0, 204) // 80% Transparent
+        this.strokeWeight = 2
+        this.fillColor = color(0, 0, 0, 0) // 100% Transparent
+        this.lineDash = [0, 8]
+        this.buttonColor = color(0, 0, 0, 204) // 80% Transparent
+        this.buttonSize = 5
+
         this.initialize()
     }
 
@@ -27,13 +34,6 @@ class selectTool extends Tool {
 
         this.corners = [] // top-left, top-right, bottom-right, bottom-left
         this.sides = [] // top, right, bottom, left
-
-        this.strokeColor = color(0, 0, 0, 204) // 80% Transparent
-        this.strokeWeight = 2
-        this.fillColor = color(0, 0, 0, 0) // 100% Transparent
-        this.lineDash = [0, 8]
-        this.buttonColor = color(0, 0, 0, 204) // 80% Transparent
-        this.buttonSize = 5
 
         this.dragging = false
 
