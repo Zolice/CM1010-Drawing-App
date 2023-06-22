@@ -27,7 +27,9 @@ function setup() {
 	toolbox.addTool(new LineToTool())
 	toolbox.addTool(new SprayCanTool())
 	toolbox.addTool(new mirrorDrawTool())
+	
 	toolbox.addTool(new selectTool())
+	toolbox.addTool(new imageTool())
 }
 
 function draw() {
