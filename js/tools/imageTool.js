@@ -154,6 +154,11 @@ class imageTool extends Tool {
         this.inputWidth.id = 'imageWidthInput'
         this.inputWidth.type = 'number'
 
+        // Adjust the width in input.oninput
+        this.inputWidth.oninput = () => {
+            this.selectedWidth = this.inputWidth.value
+        }
+
         // Append text and input to button
         button.appendChild(text)
         button.appendChild(this.inputWidth)
@@ -177,6 +182,12 @@ class imageTool extends Tool {
         this.inputHeight.className = 'textSelector'
         this.inputHeight.id = 'imageHeightInput'
         this.inputHeight.type = 'number'
+
+        // Adjust the height in input.oninput
+        this.inputHeight.oninput = () => {
+            console.log("hello")
+            this.selectedHeight = this.inputHeight.value
+        }
 
         // Append text and input to button
         button.appendChild(text)
@@ -271,6 +282,7 @@ class imageTool extends Tool {
     }
 
     drawImage(border = true) {
+        console.log("Drawing Height: " + this.selectedHeight + " Width: " + this.selectedWidth + " X: " + this.selectedX + " Y: " + this.selectedY + "")
         // Check if there's a loaded image
         if (!this.loaded) return
 
@@ -289,7 +301,7 @@ class imageTool extends Tool {
         if (border) rect(this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight)
 
         // Draw the image to the canvas
-        image(this.image, this.selectedX, this.selectedY)
+        image(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight)
 
         // Draw buttons at the 4 corners to adjust the size
         // Reset Line Dash
