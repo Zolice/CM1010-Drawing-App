@@ -156,7 +156,9 @@ class imageTool extends Tool {
 
         // Adjust the width in input.oninput
         this.inputWidth.oninput = () => {
-            this.selectedWidth = this.inputWidth.value
+            this.selectedWidth = this.inputWidth.valueAsNumber
+            this.calculateCornersAndSides()
+            this.updateImage()
         }
 
         // Append text and input to button
@@ -186,7 +188,9 @@ class imageTool extends Tool {
         // Adjust the height in input.oninput
         this.inputHeight.oninput = () => {
             console.log("hello")
-            this.selectedHeight = this.inputHeight.value
+            this.selectedHeight = this.inputHeight.valueAsNumber
+            this.calculateCornersAndSides()
+            this.updateImage()
         }
 
         // Append text and input to button
@@ -195,7 +199,6 @@ class imageTool extends Tool {
 
         // Append button to footer
         select("#footer").elt.appendChild(button)
-
     }
 
     selectImageCallback(file) {
@@ -232,41 +235,6 @@ class imageTool extends Tool {
         this.selectedX = width / 2 - this.image.width / 2
         this.selectedY = height / 2 - this.image.height / 2
 
-        // Bottom Right Corner
-        let bottomRightX = width / 2 + this.image.width / 2
-        let bottomRightY = height / 2 + this.image.height / 2
-
-        // Top Right Corner 
-        let topRightX = bottomRightX
-        let topRightY = this.selectedY
-
-        // Bottom Left Corner
-        let bottomLeftX = this.selectedX
-        let bottomLeftY = bottomRightY
-
-        // Add the corner coordinates to this.corners[]
-        this.corners = [createVector(this.selectedX, this.selectedY), createVector(topRightX, topRightY), createVector(bottomRightX, bottomRightY), createVector(bottomLeftX, bottomLeftY)]
-
-        // Get the side coordinates
-        // Top Side
-        let topX = (this.corners[0].x + this.corners[1].x) / 2
-        let topY = this.corners[0].y
-
-        // Right Side
-        let rightX = this.corners[1].x
-        let rightY = (this.corners[1].y + this.corners[2].y) / 2
-
-        // Bottom Side
-        let bottomX = (this.corners[2].x + this.corners[3].x) / 2
-        let bottomY = this.corners[2].y
-
-        // Left Side
-        let leftX = this.corners[3].x
-        let leftY = (this.corners[0].y + this.corners[3].y) / 2
-
-        // Add the side coordinates to this.sides[]
-        this.sides = [createVector(topX, topY), createVector(rightX, rightY), createVector(bottomX, bottomY), createVector(leftX, leftY)]
-
         // Set the width and height of the image
         this.selectedWidth = this.image.width
         this.selectedHeight = this.image.height
@@ -274,10 +242,60 @@ class imageTool extends Tool {
         this.inputWidth.value = this.image.width
         this.inputHeight.value = this.image.height
 
+        // Calculate the corners and sides
+        this.calculateCornersAndSides()
+
         // Set loaded to true
         this.loaded = true
 
         // Draw the image in the middle of the Canvas
+        this.drawImage()
+    }
+
+    calculateCornersAndSides() {
+        // Empty this.corners and this.sides
+        this.corners = []
+        this.sides = []
+
+        // Get the coordinates based on the selectedX, selectedY, selectedWidth, and selectedHeight
+        // Get corner coordinates
+        // Top Left Corner (Origin)
+        this.corners.push(createVector(this.selectedX, this.selectedY))
+
+        // Top Right Corner
+        this.corners.push(createVector(this.selectedX + this.selectedWidth, this.selectedY))
+
+        // Bottom Left Corner
+        this.corners.push(createVector(this.selectedX, this.selectedY + this.selectedHeight))
+
+        // Bottom Right Corner
+        this.corners.push(createVector(this.selectedX + this.selectedWidth, this.selectedY + this.selectedHeight))
+
+        // Get the side coordinates
+        // Top Side
+        this.sides.push(createVector((this.corners[0].x + this.corners[1].x) / 2, this.corners[0].y))
+
+        // Right Side
+        this.sides.push(createVector(this.corners[1].x, (this.corners[1].y + this.corners[2].y) / 2))
+
+        // Bottom Side
+        this.sides.push(createVector((this.corners[2].x + this.corners[3].x) / 2, this.corners[2].y))
+
+        // Left Side
+        this.sides.push(createVector(this.corners[2].x, (this.corners[0].y + this.corners[3].y) / 2))
+    }
+
+    updateImage() {
+        // Check if an image is loaded
+        if (!this.loaded) return
+
+        // Copy this.original to pixels[] to update the canvas
+        pixels = this.original.slice()
+
+        // Push the modifications to pixels
+        updatePixels()
+
+        // Draw the image to the canvas
         this.drawImage()
     }
 
