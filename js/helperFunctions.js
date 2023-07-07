@@ -66,3 +66,50 @@ function adjustPreview() {
 	// Set Background Colour
 	select("#sideOptionsPreview").elt.style.backgroundColor = select("#backgroundColour").elt.value
 }
+
+function drawImage(p5Image, x = 0, y = 0, width, height, corners, sides, designData, border = true) {
+	console.log("Helper FUnction")
+	
+	// Check if there's a loaded image
+	if (!p5Image) return
+
+	width = width ? width : p5Image.width
+	height = height ? height : p5Image.height
+
+	console.log(width, height, corners, sides, designData, border)
+	// Set fill and stroke
+	// Set Stroke
+	stroke(designData.strokeColor)
+	strokeWeight(designData.strokeWeight)
+
+	// Set fill
+	fill(designData.fillColor)
+
+	// Make the rectangle have dotted lines
+	drawingContext.setLineDash(designData.lineDash)
+
+	// Draw the border
+	if (border) rect(x, y, width, height)
+
+	// Draw the image to the canvas
+	image(p5Image, x, y, width, height)
+
+	// Draw buttons at the 4 corners to adjust the size
+	// Reset Line Dash
+	drawingContext.setLineDash([0, 0])
+
+	// Add Fill and Stroke Colours
+	fill(designData.buttonColor)
+	stroke(designData.buttonColor)
+
+	// Draw the buttons
+	if (border) {
+		corners.forEach(corner => {
+			ellipse(corner.x, corner.y, designData.buttonSize, designData.buttonSize)
+		})
+
+		sides.forEach(side => {
+			ellipse(side.x, side.y, designData.buttonSize, designData.buttonSize)
+		})
+	}
+}

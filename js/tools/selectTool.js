@@ -13,6 +13,15 @@ class selectTool extends Tool {
         this.buttonColor = color(0, 0, 0, 204) // 80% Transparent
         this.buttonSize = 5
 
+        this.designData = {
+            "strokeColor": this.strokeColor,
+            "strokeWeight": this.strokeWeight,
+            "fillColor": this.fillColor,
+            "lineDash": this.lineDash,
+            "buttonColor": this.buttonColor,
+            "buttonSize": this.buttonSize
+        }
+
         this.initialize()
     }
 
@@ -117,7 +126,8 @@ class selectTool extends Tool {
                     updatePixels()
 
                     // Draw the image to the canvas
-                    this.drawImage()
+                    // drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
+                    drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
                 }
             }
         }
@@ -213,7 +223,7 @@ class selectTool extends Tool {
             updatePixels()
 
             // Draw the image to the canvas
-            this.drawImage()
+            drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
 
             // loadPixels()
             // updatePixels()
@@ -281,7 +291,7 @@ class selectTool extends Tool {
 
         // Draw the image to the canvas
         // Without the border
-        this.drawImage(false)
+        drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, false)
 
         // Save the image
         loadPixels()

@@ -14,6 +14,15 @@ class imageTool extends Tool {
         this.lineDash = [0, 8]
         this.buttonColor = color(0, 0, 0, 204) // 80% Transparent
         this.buttonSize = 5
+
+        this.designData = {
+            "strokeColor": this.strokeColor,
+            "strokeWeight": this.strokeWeight,
+            "fillColor": this.fillColor,
+            "lineDash": this.lineDash,
+            "buttonColor": this.buttonColor,
+            "buttonSize": this.buttonSize
+        }
     }
 
     initialize() {
@@ -83,7 +92,7 @@ class imageTool extends Tool {
                 updatePixels()
 
                 // Draw the image to the canvas
-                this.drawImage()
+                drawImage(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
             }
         }
         else {
@@ -103,7 +112,8 @@ class imageTool extends Tool {
 
         // Draw the image to the canvas
         // Without the border
-        this.drawImage(false)
+        // this.drawImage(false)
+        drawImage(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, false)
 
         // Save the image
         loadPixels()
@@ -249,7 +259,7 @@ class imageTool extends Tool {
         this.loaded = true
 
         // Draw the image in the middle of the Canvas
-        this.drawImage()
+        drawImage(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
     }
 
     calculateCornersAndSides() {
@@ -296,7 +306,7 @@ class imageTool extends Tool {
         updatePixels()
 
         // Draw the image to the canvas
-        this.drawImage()
+        drawImage(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
     }
 
     drawImage(border = true) {
