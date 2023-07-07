@@ -113,7 +113,7 @@ function mirrorDrawTool() {
 	this.unselectTool = function () {
 		updatePixels();
 		//clear options
-		select(".footer").html("")
+		select("#footer").html("")
 	};
 
 	//adds a button and click handler to the options area. When clicked
