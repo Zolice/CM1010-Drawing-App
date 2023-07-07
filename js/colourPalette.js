@@ -165,7 +165,7 @@ class ColourPalette {
 
 	updateOptions(event) {
 		if (select("#strokeColor")) this.strokeColor = select("#strokeColor").elt.value
-		if (select("#strokeSize")) this.strokeSize = select("#strokeSize").elt.value
+		if (select("#strokeSize")) this.strokeSize = select("#strokeSize").elt.valueAsNumber
 		if (select("#fillColor")) this.fillColor = select("#fillColor").elt.value
 	}
 
