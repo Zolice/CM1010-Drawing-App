@@ -291,7 +291,7 @@ class selectTool extends Tool {
 
         // Draw the image to the canvas
         // Without the border
-        if (this.selectedPixels.length > 0) drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, false)
+        if (this.selectedPixels.width > 0) drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, false)
 
         // Save the image
         loadPixels()
