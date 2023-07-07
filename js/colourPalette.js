@@ -69,7 +69,7 @@ class ColourPalette {
 		}
 	}
 
-	loadColors(callback, strokeColor = "#000000", strokeWidth = 5, fillColor) {
+	loadColors(callback, strokeColor = "#000000", strokeWidth = 5, fillColor = null) {
 		// Empty the footer's current options
 		select("#footer").html("")
 
