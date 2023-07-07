@@ -36,6 +36,8 @@ function HelperFunctions() {
 
 		background(select("#backgroundColour").elt.value)
 
+		loadPixels()
+
 		// Close the Create New side pop up
 		select("#sideOptionsContainer").elt.classList.add("sideOptionsContainerHidden")
 	})
