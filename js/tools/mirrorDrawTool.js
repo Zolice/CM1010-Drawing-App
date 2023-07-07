@@ -25,7 +25,7 @@ function mirrorDrawTool() {
 		updatePixels();
 
 		//do the drawing if the mouse is pressed
-		if (mouseIsPressed) {
+		if (mouseIsPressed && mouseInBounds()) {
 			//if the previous values are -1 set them to the current mouse location
 			//and mirrored positions
 			if (previousMouseX == -1) {
@@ -38,6 +38,7 @@ function mirrorDrawTool() {
 			//if there are values in the previous locations
 			//draw a line between them and the current positions
 			else {
+				colourP.setStroke()
 				line(previousMouseX, previousMouseY, mouseX, mouseY);
 				previousMouseX = mouseX;
 				previousMouseY = mouseY;
@@ -157,5 +158,8 @@ function mirrorDrawTool() {
 		// Actvate the tool
 		self.axis = "x";
 		self.lineOfSymmetry = width / 2;
+
+		// Add stroke options to footer
+		colourP.loadColors(true, false)
 	};
 }
