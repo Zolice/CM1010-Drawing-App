@@ -115,3 +115,9 @@ function drawImage(p5Image, x = 0, y = 0, width, height, corners, sides, designD
 		})
 	}
 }
+
+// Check if mouse is within canvas
+function mouseInBounds() {
+	// If mouse is within canvas, return true
+	return (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height)
+}
