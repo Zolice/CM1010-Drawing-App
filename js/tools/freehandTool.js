@@ -10,9 +10,6 @@ function FreehandTool() {
 	var previousMouseX = -1;
 	var previousMouseY = -1;
 
-	this.strokeColor = "#000000"
-	this.strokeSize = 5
-
 	this.draw = function () {
 		//if the mouse is pressed
 		if (mouseIsPressed && mouseInBounds()) {
@@ -26,8 +23,8 @@ function FreehandTool() {
 			//there to the current mouse location
 			else {
 				// Set the Stroke properties
-				stroke(this.strokeColor)
-				strokeWeight(this.strokeSize)
+				colourP.setStroke()
+				console.log(colourP.strokeSize)
 
 				line(previousMouseX, previousMouseY, mouseX, mouseY);
 				previousMouseX = mouseX;
@@ -44,8 +41,11 @@ function FreehandTool() {
 	};
 
 	this.populateOptions = function () {
-		// console.log("Loading")
-		colourP.loadColors((value) => { this.updateOptions(value) }, this.strokeColor, this.strokeSize)
+		// Empty the footer's current options
+		select("#footer").html("")
+
+		// Add stroke options to footer
+		colourP.loadColors(true, false)
 	}
 
 	this.updateOptions = function (event) {
