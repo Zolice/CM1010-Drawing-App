@@ -4,7 +4,7 @@ class imageTool extends Tool {
 
         this.name = "Image"
         this.description = "Add an Image to the Canvas"
-        // this.icon = "assets/select.png"
+        this.icon = "assets/imageTool.png"
 
         this.initialize()
 
