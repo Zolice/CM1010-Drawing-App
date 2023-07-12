@@ -14,6 +14,8 @@ window.onload = function() {
 }
 
 function setup() {
+	// Attempt to set Frame Rate to 60 FPS
+	frameRate(60)
 
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();

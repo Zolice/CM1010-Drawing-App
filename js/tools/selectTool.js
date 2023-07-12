@@ -6,19 +6,19 @@ class selectTool extends Tool {
         this.description = "Select an area"
         this.icon = "assets/selectTool.png"
 
-        this.designData = {
-            "strokeColor": color(0, 0, 0, 204), // 80% Transparent
-            "strokeWeight": 2,
-            "fillColor": color(0, 0, 0, 0), // 100% Transparent
-            "lineDash": [0,8],
-            "buttonColor": color(0, 0, 0, 204), // 80% Transparent
-            "buttonSize": 5
-        }
-
         this.initialize()
     }
 
     initialize() {
+        this.designData = {
+            "strokeColor": color(0, 0, 0, 204), // 80% Transparent
+            "strokeWeight": 2,
+            "fillColor": color(0, 0, 0, 0), // 100% Transparent
+            "lineDash": [0, 8],
+            "buttonColor": color(0, 0, 0, 204), // 80% Transparent
+            "buttonSize": 5
+        }
+
         this.previousMouseX = -1
         this.previousMouseY = -1
 
