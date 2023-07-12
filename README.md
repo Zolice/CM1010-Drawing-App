@@ -18,6 +18,10 @@ Project assigned by SIM GE - UOL for the purpose of CM1010 Introduction to Compu
 ![javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=000000)
 <a href="freeiconspng.com"><img src="https://img.shields.io/badge/Freeiconspng-000000?style=for-the-badge&logo=freeiconspng&logoColor=FFFFFF"></a>
 
+## Screenshots
+![Screenshot-1](demo/demo-1.png)
+![Screenshot-2](demo/demo-2.png)
+
 <p align="right"><a href="#top">back to top</a></p>
 
 # Usage
