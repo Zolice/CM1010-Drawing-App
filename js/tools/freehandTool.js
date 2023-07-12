@@ -24,7 +24,6 @@ function FreehandTool() {
 			else {
 				// Set the Stroke properties
 				colourP.setStroke()
-				console.log(colourP.strokeSize)
 
 				line(previousMouseX, previousMouseY, mouseX, mouseY);
 				previousMouseX = mouseX;
@@ -49,7 +48,6 @@ function FreehandTool() {
 	}
 
 	this.updateOptions = function (event) {
-		console.log(event)
 		// Update the values
 		this.strokeColor = select("#strokeColor").elt.value
 		this.strokeSize = select("#strokeSize").elt.value

@@ -8,20 +8,13 @@ class imageTool extends Tool {
 
         this.initialize()
 
-        this.strokeColor = color(0, 0, 0, 204) // 80% Transparent
-        this.strokeWeight = 2
-        this.fillColor = color(0, 0, 0, 0) // 100% Transparent
-        this.lineDash = [0, 8]
-        this.buttonColor = color(0, 0, 0, 204) // 80% Transparent
-        this.buttonSize = 5
-
         this.designData = {
-            "strokeColor": this.strokeColor,
-            "strokeWeight": this.strokeWeight,
-            "fillColor": this.fillColor,
-            "lineDash": this.lineDash,
-            "buttonColor": this.buttonColor,
-            "buttonSize": this.buttonSize
+            "strokeColor": color(0, 0, 0, 204), // 80% Transparent
+            "strokeWeight": 2,
+            "fillColor": color(0, 0, 0, 0), // 100% Transparent
+            "lineDash": [0,8],
+            "buttonColor": color(0, 0, 0, 204), // 80% Transparent
+            "buttonSize": 5
         }
     }
 
@@ -61,7 +54,6 @@ class imageTool extends Tool {
             if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
                 // Check if this is the first instance of clicking the selection
                 if (this.previousMouseX <= 0) {
-                    console.log("Clicking Selection")
                     this.previousMouseX = mouseX
                     this.previousMouseY = mouseY
                 }
@@ -112,7 +104,6 @@ class imageTool extends Tool {
 
         // Draw the image to the canvas
         // Without the border
-        // this.drawImage(false)
         drawImage(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, false)
 
         // Save the image
@@ -130,12 +121,6 @@ class imageTool extends Tool {
         let button = document.createElement('div')
         button.id = 'loadImageButton'
         button.className = 'toolOptionsWrapper toolOptionsButton'
-
-        // Create a text element
-        // let text = document.createElement('h5')
-        // text.className = 'toolOptionsSetting toolOptionsText'
-        // text.id = 'mirrorDrawToolDirection'
-        // text.innerHTML = 'Select New Image'
 
         // Create a p5.js File Input
         let input = createFileInput((file) => { this.selectImageCallback(file) })
@@ -197,7 +182,6 @@ class imageTool extends Tool {
 
         // Adjust the height in input.oninput
         this.inputHeight.oninput = () => {
-            console.log("hello")
             this.selectedHeight = this.inputHeight.valueAsNumber
             this.calculateCornersAndSides()
             this.updateImage()
@@ -217,7 +201,6 @@ class imageTool extends Tool {
         if (file.type === 'image') {
             // Save the image
             this.image = loadImage(file.data, (image) => { this.loadImageCallback(image) })
-            console.log(this.image)
 
             // Draw the Image in the middle of the Canvas
             // image(this.image, width / 2, height / 2)
@@ -310,7 +293,6 @@ class imageTool extends Tool {
     }
 
     drawImage(border = true) {
-        console.log("Drawing Height: " + this.selectedHeight + " Width: " + this.selectedWidth + " X: " + this.selectedX + " Y: " + this.selectedY + "")
         // Check if there's a loaded image
         if (!this.loaded) return
 

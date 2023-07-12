@@ -8,10 +8,9 @@ function SprayCanTool() {
 
 	this.draw = function () {
 		var r = random(5, 10);
-		if (mouseIsPressed) {
+		if (mouseIsPressed && mouseInBounds()) {
 			for (var i = 0; i < this.count; i++) {
 				colourP.setStroke()
-				console.log("Spread: " + this.spread)
 				point(random(mouseX - this.spread, mouseX + this.spread), random(mouseY - this.spread, mouseY + this.spread));
 			}
 		}
@@ -44,8 +43,8 @@ function SprayCanTool() {
 
 		// Call the callback function when the input is changed
 		spreadSizeInput.oninput = () => { 
+			// Update the value
 			this.spread = spreadSizeInput.valueAsNumber
-			console.log(this.spread)
 		}
 
 		// Add the number input element to the spread divider
@@ -77,8 +76,8 @@ function SprayCanTool() {
 
 		// Call the callback function when the input is changed
 		countSizeInput.oninput = () => { 
+			// Update the value
 			this.count = countSizeInput.valueAsNumber
-			console.log(this.count)
 		}
 
 		// Add the number input element to the count divider

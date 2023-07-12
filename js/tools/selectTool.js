@@ -6,20 +6,13 @@ class selectTool extends Tool {
         this.description = "Select an area"
         this.icon = "assets/selectTool.png"
 
-        this.strokeColor = color(0, 0, 0, 204) // 80% Transparent
-        this.strokeWeight = 2
-        this.fillColor = color(0, 0, 0, 0) // 100% Transparent
-        this.lineDash = [0, 8]
-        this.buttonColor = color(0, 0, 0, 204) // 80% Transparent
-        this.buttonSize = 5
-
         this.designData = {
-            "strokeColor": this.strokeColor,
-            "strokeWeight": this.strokeWeight,
-            "fillColor": this.fillColor,
-            "lineDash": this.lineDash,
-            "buttonColor": this.buttonColor,
-            "buttonSize": this.buttonSize
+            "strokeColor": color(0, 0, 0, 204), // 80% Transparent
+            "strokeWeight": 2,
+            "fillColor": color(0, 0, 0, 0), // 100% Transparent
+            "lineDash": [0,8],
+            "buttonColor": color(0, 0, 0, 204), // 80% Transparent
+            "buttonSize": 5
         }
 
         this.initialize()
@@ -76,12 +69,12 @@ class selectTool extends Tool {
                 updatePixels()
 
                 // Set the stroke and fill of the rectangle
-                stroke(this.strokeColor)
-                strokeWeight(this.strokeWeight)
-                fill(this.fillColor)
+                stroke(this.designData.strokeColor)
+                strokeWeight(this.designData.strokeWeight)
+                fill(this.designData.fillColor)
 
                 // Make the rectangle have dotted lines
-                drawingContext.setLineDash(this.lineDash)
+                drawingContext.setLineDash(this.designData.lineDash)
 
                 // Draw the rectangle
                 rect(this.previousMouseX, this.previousMouseY, mouseX - this.previousMouseX, mouseY - this.previousMouseY)
@@ -95,7 +88,6 @@ class selectTool extends Tool {
                 if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
                     // Check if this is the first instance of clicking the selection
                     if (this.clickX <= 0) {
-                        console.log("Clicking Selection")
                         this.clickX = mouseX
                         this.clickY = mouseY
                     }
@@ -126,7 +118,6 @@ class selectTool extends Tool {
                     updatePixels()
 
                     // Draw the image to the canvas
-                    // drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
                     drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
                 }
             }
@@ -188,7 +179,6 @@ class selectTool extends Tool {
             if (this.selectedWidth <= 0 || this.selectedHeight <= 0) {
                 // There is nothing selected, it's a straight line selection
                 // Reset the tool
-                console.log("Condition met")
                 return this.reset()
             }
 
@@ -236,47 +226,6 @@ class selectTool extends Tool {
             // Reset the previous mouse values
             this.clickX = -1
             this.clickY = -1
-        }
-    }
-
-    drawImage(border = true) {
-        // Check if there's a selection
-        if (this.selectedPixels.width <= 0) return
-
-        // Set fill and stroke
-        // Set Stroke
-        stroke(this.strokeColor)
-        strokeWeight(this.strokeWeight)
-
-        // Set fill
-        fill(this.fillColor)
-
-        // Make the rectangle have dotted lines
-        drawingContext.setLineDash(this.lineDash)
-
-        // Draw the border
-        if (border) rect(this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight)
-
-        // Draw the image to the canvas
-        image(this.selectedPixels, this.selectedX, this.selectedY)
-
-        // Draw buttons at the 4 corners to adjust the size
-        // Reset Line Dash
-        drawingContext.setLineDash([0, 0])
-
-        // Add Fill and Stroke Colours
-        fill(this.buttonColor)
-        stroke(this.buttonColor)
-
-        // Draw the buttons
-        if (border) {
-            this.corners.forEach(corner => {
-                ellipse(corner.x, corner.y, this.buttonSize, this.buttonSize)
-            })
-
-            this.sides.forEach(side => {
-                ellipse(side.x, side.y, this.buttonSize, this.buttonSize)
-            })
         }
     }
 

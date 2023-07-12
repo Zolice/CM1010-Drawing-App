@@ -13,16 +13,23 @@ class Tool {
     initialize() {
         // This is used to provide compatibility for classes to work with sketch.js and toolbox.js
         // Set draw() to this.draw
-        console.log("Hello")
-        this.draw = draw()
+        this.draw = () => { this.drawing() }
+        this.unselectTool = () => { this.reset() }
+        this.populateOptions = () => { this.populateOption() }
     }
 
-    draw() {
-        console.log("drawing...")
+    drawing() {
         // This is a stub
+        return
+    }
+
+    reset() {
+        // This is a stub
+        return
     }
 
     populateOptions() {
         // This is a stub
+        return
     }
 }

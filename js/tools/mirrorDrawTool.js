@@ -120,7 +120,6 @@ function mirrorDrawTool() {
 	//adds a button and click handler to the options area. When clicked
 	//toggle the line of symmetry between horizonatl to vertical
 	this.populateOptions = function () {
-		console.log(select("#footer"))
 		// Create a button element
 		let button = document.createElement('div')
 		button.id = 'directionButton'

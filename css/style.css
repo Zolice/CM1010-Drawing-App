@@ -108,20 +108,6 @@ body {
 	flex-direction: row-reverse !important;
 }
 
-.options {
-	grid-area: options;
-	padding: 15px;
-}
-
-.colourSwatches {
-	box-sizing: border-box;
-	width: 40px;
-	height: 40px;
-	max-height: 40px;
-	max-width: 40px;
-	margin: 5px;
-}
-
 .wrapper {
 	height: 100%;
 	width: 100%;
@@ -198,7 +184,6 @@ body {
 .toolButtonSelected {
 	background-color: rgba(200, 200, 200);
 	border: 0.3em solid rgba(255, 255, 255);
-
 }
 
 .toolButton>img {
@@ -234,14 +219,6 @@ body {
 
 .helperButtons:hover {
 	background-color: rgba(255, 255, 255, 0.6);
-}
-
-.helperButtonsSelected {
-	background-color: rgba(255, 255, 255, 1);
-}
-
-.helperButtonsSelected:hover {
-	background-color: rgba(255, 255, 255, 1);
 }
 
 .contentWrapper {

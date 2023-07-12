@@ -70,15 +70,12 @@ function adjustPreview() {
 }
 
 function drawImage(p5Image, x = 0, y = 0, width, height, corners, sides, designData, border = true) {
-	console.log("Helper FUnction")
-	
 	// Check if there's a loaded image
 	if (!p5Image) return
 
 	width = width ? width : p5Image.width
 	height = height ? height : p5Image.height
 
-	console.log(width, height, corners, sides, designData, border)
 	// Set fill and stroke
 	// Set Stroke
 	stroke(designData.strokeColor)
