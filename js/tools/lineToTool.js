@@ -1,8 +1,8 @@
 //a tool for drawing straight lines to the screen. Allows the user to preview
 //the a line to the current mouse position before drawing the line to the 
 //pixel array.
-function LineToTool(){
-	this.icon = "assets/lineTo.jpg";
+function LineToTool() {
+	this.icon = "assets/lineTo.png";
 	this.name = "LineTo";
 
 	var startMouseX = -1;
@@ -10,12 +10,12 @@ function LineToTool(){
 	var drawing = false;
 
 	//draws the line to the screen 
-	this.draw = function(){
+	this.draw = function () {
 
 		//only draw when mouse is clicked
-		if(mouseIsPressed){
+		if (mouseIsPressed && mouseInBounds()) {
 			//if it's the start of drawing a new line
-			if(startMouseX == -1){
+			if (startMouseX == -1) {
 				startMouseX = mouseX;
 				startMouseY = mouseY;
 				drawing = true;
@@ -23,17 +23,18 @@ function LineToTool(){
 				loadPixels();
 			}
 
-			else{
+			else {
 				//update the screen with the saved pixels to hide any previous
 				//line between mouse pressed and released
 				updatePixels();
 				//draw the line
+				colourP.setStroke()
 				line(startMouseX, startMouseY, mouseX, mouseY);
 			}
 
 		}
 
-		else if(drawing){
+		else if (drawing) {
 			//save the pixels with the most recent line and reset the
 			//drawing bool and start locations
 			loadPixels();
@@ -42,6 +43,14 @@ function LineToTool(){
 			startMouseY = -1;
 		}
 	};
+
+	this.populateOptions = function () {
+		// Empty the footer's current options
+		select("#footer").html("")
+
+		// Add stroke options to footer
+		colourP.loadColors(true, false)
+	}
 
 
 }

@@ -1,6 +1,6 @@
-function FreehandTool(){
+function FreehandTool() {
 	//set an icon and a name for the object
-	this.icon = "assets/freehand.jpg";
+	this.icon = "assets/freehand.png";
 	this.name = "freehand";
 
 	//to smoothly draw we'll draw a line from the previous mouse location
@@ -10,18 +10,21 @@ function FreehandTool(){
 	var previousMouseX = -1;
 	var previousMouseY = -1;
 
-	this.draw = function(){
+	this.draw = function () {
 		//if the mouse is pressed
-		if(mouseIsPressed){
+		if (mouseIsPressed && mouseInBounds()) {
 			//check if they previousX and Y are -1. set them to the current
 			//mouse X and Y if they are.
-			if (previousMouseX == -1){
+			if (previousMouseX == -1) {
 				previousMouseX = mouseX;
 				previousMouseY = mouseY;
 			}
 			//if we already have values for previousX and Y we can draw a line from 
 			//there to the current mouse location
-			else{
+			else {
+				// Set the Stroke properties
+				colourP.setStroke()
+
 				line(previousMouseX, previousMouseY, mouseX, mouseY);
 				previousMouseX = mouseX;
 				previousMouseY = mouseY;
@@ -30,9 +33,23 @@ function FreehandTool(){
 		//if the user has released the mouse we want to set the previousMouse values 
 		//back to -1.
 		//try and comment out these lines and see what happens!
-		else{
+		else {
 			previousMouseX = -1;
 			previousMouseY = -1;
 		}
 	};
+
+	this.populateOptions = function () {
+		// Empty the footer's current options
+		select("#footer").html("")
+
+		// Add stroke options to footer
+		colourP.loadColors(true, false)
+	}
+
+	this.updateOptions = function (event) {
+		// Update the values
+		this.strokeColor = select("#strokeColor").elt.value
+		this.strokeSize = select("#strokeSize").elt.value
+	}
 }

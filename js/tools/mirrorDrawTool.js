@@ -1,6 +1,6 @@
 function mirrorDrawTool() {
 	this.name = "mirrorDraw";
-	this.icon = "assets/mirrorDraw.jpg";
+	this.icon = "assets/mirrorDraw.png";
 
 	//which axis is being mirrored (x or y) x is default
 	this.axis = "x";
@@ -20,12 +20,12 @@ function mirrorDrawTool() {
 	var previousOppositeMouseX = -1;
 	var previousOppositeMouseY = -1;
 
-	this.draw = function() {
+	this.draw = function () {
 		//display the last save state of pixels
 		updatePixels();
 
 		//do the drawing if the mouse is pressed
-		if (mouseIsPressed) {
+		if (mouseIsPressed && mouseInBounds()) {
 			//if the previous values are -1 set them to the current mouse location
 			//and mirrored positions
 			if (previousMouseX == -1) {
@@ -38,6 +38,7 @@ function mirrorDrawTool() {
 			//if there are values in the previous locations
 			//draw a line between them and the current positions
 			else {
+				colourP.setStroke()
 				line(previousMouseX, previousMouseY, mouseX, mouseY);
 				previousMouseX = mouseX;
 				previousMouseY = mouseY;
@@ -86,7 +87,7 @@ function mirrorDrawTool() {
 	 *@param a [x,y]: the axis of the coordinate (y or y)
 	 *@return number: the opposite coordinate
 	 */
-	this.calculateOpposite = function(n, a) {
+	this.calculateOpposite = function (n, a) {
 		//if the axis isn't the one being mirrored return the same
 		//value
 		if (a != this.axis) {
@@ -110,20 +111,34 @@ function mirrorDrawTool() {
 
 	//when the tool is deselected update the pixels to just show the drawing and
 	//hide the line of symmetry. Also clear options
-	this.unselectTool = function() {
+	this.unselectTool = function () {
 		updatePixels();
 		//clear options
-		select(".options").html("");
+		select("#footer").html("")
 	};
 
 	//adds a button and click handler to the options area. When clicked
 	//toggle the line of symmetry between horizonatl to vertical
-	this.populateOptions = function() {
-		select(".options").html(
-			"<button id='directionButton'>Make Horizontal</button>");
-		// 	//click handler
-		select("#directionButton").mouseClicked(function() {
-			var button = select("#" + this.elt.id);
+	this.populateOptions = function () {
+		// Create a button element
+		let button = document.createElement('div')
+		button.id = 'directionButton'
+		button.className = 'toolOptionsWrapper toolOptionsButton'
+
+		// Create a text element
+		let text = document.createElement('h5')
+		text.className = 'toolOptionsSetting toolOptionsText'
+		text.id = 'mirrorDrawToolDirection'
+		text.innerHTML = 'Make Horizontal'
+
+		// Append text to button
+		button.appendChild(text)
+
+		// Add button click event listener
+		button.onclick = () => {
+			let button = select("#mirrorDrawToolDirection");
+
+			// Change the orientation of the tool
 			if (self.axis == "x") {
 				self.axis = "y";
 				self.lineOfSymmetry = height / 2;
@@ -133,6 +148,17 @@ function mirrorDrawTool() {
 				self.lineOfSymmetry = width / 2;
 				button.html('Make Horizontal');
 			}
-		});
+		}
+
+		// Empty the footer and append button
+		select("#footer").html("")
+		select("#footer").elt.appendChild(button)
+
+		// Actvate the tool
+		self.axis = "x";
+		self.lineOfSymmetry = width / 2;
+
+		// Add stroke options to footer
+		colourP.loadColors(true, false)
 	};
 }

@@ -4,13 +4,18 @@ var toolbox = null;
 var colourP = null;
 var helpers = null;
 
-
-function setup() {
-
+window.onload = function() {
 	//create a canvas to fill the content div from index.html
 	canvasContainer = select('#content');
-	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
+	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height - 4); //subtract 4 for the border
 	c.parent("content");
+
+	background(255);
+}
+
+function setup() {
+	// Attempt to set Frame Rate to 60 FPS
+	frameRate(60)
 
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();
@@ -20,12 +25,13 @@ function setup() {
 	toolbox = new Toolbox();
 
 	//add the tools to the toolbox.
-	toolbox.addTool(new FreehandTool());
-	toolbox.addTool(new LineToTool());
-	toolbox.addTool(new SprayCanTool());
-	toolbox.addTool(new mirrorDrawTool());
-	background(255);
-
+	toolbox.addTool(new FreehandTool())
+	toolbox.addTool(new LineToTool())
+	toolbox.addTool(new SprayCanTool())
+	toolbox.addTool(new mirrorDrawTool())
+	
+	toolbox.addTool(new selectTool())
+	toolbox.addTool(new imageTool())
 }
 
 function draw() {

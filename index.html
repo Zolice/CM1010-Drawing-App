@@ -1,35 +1,89 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>CM1010 Drawing App</title>
 
-    <script src="lib/p5.min.js"></script>
-    <script src="lib/p5.dom.js"></script>
+<head>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter">
+  <title>CM1010 Drawing App</title>
+  <link rel="icon" href="./assets/logo.png">
 
-    <script src="js/sketch.js"></script>
+  <script src="lib/p5.min.js"></script>
+  <script src="lib/p5.dom.js"></script>
 
-    <script src="js/toolbox.js"></script>
-    <script src="js/colourPalette.js"></script>
-    <script src="js/helperFunctions.js"></script>
+  <script src="js/sketch.js"></script>
 
-    <!-- Tools -->
-    <script src="js/tools/freehandTool.js"></script>
-    <script src="js/tools/lineToTool.js"></script>
-    <script src="js/tools/sprayCanTool.js"></script>
-    <script src="js/tools/mirrorDrawTool.js"></script>
-  </head>
-  <body>
-  	<div class="wrapper">
-      <div class="box header">My Drawing App
+  <script src="js/toolbox.js"></script>
+  <script src="js/colourPalette.js"></script>
+  <script src="js/helperFunctions.js"></script>
 
-        <button id="clearButton">Clear</button>
-        <button id="saveImageButton">Save Image</button>
+  <!-- Tools -->
+  <script src="js/tools/tool.js"></script>
+  <script src="js/tools/selectTool.js"></script>
+  <script src="js/tools/imageTool.js"></script>
+
+  <script src="js/tools/freehandTool.js"></script>
+  <script src="js/tools/lineToTool.js"></script>
+  <script src="js/tools/sprayCanTool.js"></script>
+  <script src="js/tools/mirrorDrawTool.js"></script>
+</head>
+
+<body>
+  <div id="sideOptionsContainer" class="sideOptionsContainer sideOptionsContainerHidden">
+    <div class="sideOptions">
+      <div class="header sideOptionsColor">
+        <h3>Create New</h3>
       </div>
-      <div class="box" id="sidebar"></div>
-      <div id="content"></div>
-      <div class="box colourPalette"></div>
-      <div class="box options"></div>
-	</div>
-  </body>
+
+      <div class="sideOptionsContent">
+        <div class="sideOptionsLine">
+          <h5 class="toolOptionsType toolOptionsText">Width</h5>
+          <div class="toolOptionsWrapper">
+            <input class="textSelector sideOptionsInput" type="number" id="createWidth" value="10" min="1" />
+          </div>
+
+          <h5 class="toolOptionsType toolOptionsText">Height</h5>
+          <div class="toolOptionsWrapper">
+            <input class="textSelector sideOptionsInput" type="number" id="createHeight" value="10" min="1" step="1" />
+          </div>
+        </div>
+
+        <div class="sideOptionsLine">
+          <h5 class="toolOptionsType toolOptionsText">Background</h5>
+          <div class="toolOptionsWrapper">
+            <h5 class="toolOptionsSetting toolOptionsText">Colour</h5>
+            <input class="colorSelector" type="color" id="backgroundColour" value="#FFFFFF" />
+          </div>
+        </div>
+
+        <h5 class="sideOptionsPreviewText">Preview</h5>
+        <div class="sideOptionsPreviewContainer">
+          <div class="sideOptionsPreview" id="sideOptionsPreview" style="width: 100%; aspect-ratio: 3/2;"></div>
+        </div>
+      </div>
+
+      <div id="sideOptionsFooter" class="footer sideOptionsColor sideOptionsFooter">
+        <button class="helperButtons" id="createButton">Create</button>
+        <button class="helperButtons" id="cancelButton">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper">
+    <div class="header">
+      <h3>CM1010 Drawing App</h3>
+
+      <div class="sidebar" id="sidebar"></div>
+
+      <div class="helperButtonWrapper">
+        <button class="helperButtons" id="clearButton">New</button>
+        <button class="helperButtons" id="saveImageButton">Save Image</button>
+      </div>
+    </div>
+    <div class="contentWrapper">
+      <div class="content" id="content"></div>
+    </div>
+
+    <div id="footer" class="footer"></div>
+  </div>
+</body>
+
 </html>
