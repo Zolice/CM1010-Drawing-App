@@ -1,9 +1,9 @@
-class selectTool extends Tool {
+class scissorTool extends Tool {
     constructor() {
         super()
 
-        this.name = "Select"
-        this.description = "Select an area"
+        this.name = "Scissor"
+        this.description = "Select an area to drag"
         this.icon = "assets/selectTool.png"
 
         this.initialize()

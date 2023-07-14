@@ -30,7 +30,7 @@ function setup() {
 	toolbox.addTool(new SprayCanTool())
 	toolbox.addTool(new mirrorDrawTool())
 	
-	toolbox.addTool(new selectTool())
+	toolbox.addTool(new scissorTool())
 	toolbox.addTool(new imageTool())
 }
 
