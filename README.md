@@ -33,7 +33,7 @@ To start, open the `index.html` file using a Live Server extension.
 - [x] Original Code Restructuring
 - [x] Helper Functions
 - [x] Redesign GUI
-- [x] New Tool: Select Tool
+- [x] New Tool: Scissor Tool
 - [x] New Tool: Image Tool
 - [ ] New Tool: Stamp Tool (Coursera)
 - [ ] Update Old Tools
@@ -51,6 +51,7 @@ To start, open the `index.html` file using a Live Server extension.
 * <a href="https://github.com/"><img src="https://img.shields.io/badge/GitHub-black?style=for-the-badge&logo=github&logoColor=white" alt="github"></a>
 * <a href="https://www.adobe.com/sg/products/photoshop.html"><img src="https://img.shields.io/badge/Photoshop-001d34?style=for-the-badge&logo=photoshop&logoColor=2fa3f7" alt="photoshop"></a>
 * <a href="https://www.figma.com/"><img src="https://img.shields.io/badge/Figma-1e1e1e?style=for-the-badge&logo=figma&logoColor=f24e1e" alt="figma"></a>
+* <a href="https://www.drawio.com/"><img src="https://img.shields.io/badge/drawio-df6c0c?style=for-the-badge&logo=drawio&logoColor=ffffff" alt="draw.io"></a>
 * <a href="https://code.visualstudio.com/"><img src="https://img.shields.io/badge/Visual Studio Code-218bd3?style=for-the-badge&logo=visualstudio&logoColor=white" alt="vscode"></a>
 * <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer"><img src="https://img.shields.io/badge/Live Server-41205f?style=for-the-badge&logo=liveserver&logoColor=white" alt="vscode"></a>
 
