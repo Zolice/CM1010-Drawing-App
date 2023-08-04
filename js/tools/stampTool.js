@@ -227,6 +227,9 @@ class stampTool extends Tool {
     }
 
     createCustomStampOptions() {
+        // Unload currently loaded image
+        this.image = null
+
         // Create an array for Custom Stamp to store the elements
         let customStampOptions = []
 
