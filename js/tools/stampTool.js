@@ -4,7 +4,7 @@ class stampTool extends Tool {
 
         this.name = "Stamp"
         this.description = "Stamps an image onto the Canvas"
-        // this.icon = "assets/stampTool.png"
+        this.icon = "assets/stampTool.png"
 
         // Load assets
         this.cloudImage = loadImage("assets/cloud.png")
@@ -20,13 +20,15 @@ class stampTool extends Tool {
         this.cloudWidth = 100
         this.cloudHeight = 100
 
+        this.image = null
+
         // Create a selector for the stamp
         this.stampSelector = this.createStampSelector()
 
         // Create default settings options for star, cloud and custom stamp
         this.starStampOptions = this.createStarStampOptions()
         this.cloudStampOptions = this.createCloudStampOptions()
-        this.customStampOptions = []
+        this.customStampOptions = this.createCustomStampOptions()
 
         // This is to provide compatibility for classes to work with sketch.js and toolbox.js
         this.draw = () => { this.drawing() }
@@ -224,14 +226,111 @@ class stampTool extends Tool {
         return cloudStampOptions
     }
 
-    drawing() {
-        // This is a stub
+    createCustomStampOptions() {
+        // Create an array for Custom Stamp to store the elements
+        let customStampOptions = []
 
+        // Create a divider
+        let button = document.createElement('div')
+        button.id = 'loadImageButton'
+        button.className = 'toolOptionsWrapper toolOptionsButton'
+
+        // Create a p5.js File Input
+        let input = createFileInput((file) => { this.selectImageCallback(file) })
+        input.elt.className += `toolOptionsText`
+
+        // Append File Input to button
+        button.appendChild(input.elt)
+
+        // Append button to array
+        customStampOptions.push(button)
+
+        // Create a divider
+        button = document.createElement('div')
+        button.id = 'imageSizeButton'
+        button.className = 'toolOptionsWrapper toolOptionsButton'
+
+        // Create a text element
+        let text = document.createElement('h5')
+        text.className = 'toolOptionsSetting toolOptionsText'
+        text.id = 'imageWidth'
+        text.innerHTML = 'Width'
+
+        // Create an input element
+        this.inputWidth = document.createElement('input')
+        this.inputWidth.className = 'textSelector'
+        this.inputWidth.id = 'imageWidthInput'
+        this.inputWidth.type = 'number'
+
+        // Append text and input to button
+        button.appendChild(text)
+        button.appendChild(this.inputWidth)
+
+        // Append button to array
+        customStampOptions.push(button)
+
+        // Create a divider
+        button = document.createElement('div')
+        button.id = 'imageSizeButton'
+        button.className = 'toolOptionsWrapper toolOptionsButton'
+
+        // Create a text element
+        text = document.createElement('h5')
+        text.className = 'toolOptionsSetting toolOptionsText'
+        text.id = 'imageHeight'
+        text.innerHTML = 'Height'
+
+        // Create an input element
+        this.inputHeight = document.createElement('input')
+        this.inputHeight.className = 'textSelector'
+        this.inputHeight.id = 'imageHeightInput'
+        this.inputHeight.type = 'number'
+
+        // Append text and input to button
+        button.appendChild(text)
+        button.appendChild(this.inputHeight)
+
+        // Append button to array
+        customStampOptions.push(button)
+
+        return customStampOptions
+    }
+
+    selectImageCallback(file) {
+        console.log(file.file.name + " loaded")
+        // Check if an image is selected
+        if (file.type === 'image') {
+            // Save the image
+            this.image = loadImage(file.data, (image) => { this.loadImageCallback(image) })
+
+            // Draw the Image in the middle of the Canvas
+            // image(this.image, width / 2, height / 2)
+        }
+        // Check if a non-image is selected
+        else {
+            // Alert the user
+            alert("Please select an image")
+
+            // Reset Options
+            this.customStampOptions = this.createCustomStampOptions()
+            this.populateOption()
+        }
+    }
+
+    loadImageCallback(loadedImage) {
+        // Ensure that the loaded image is the one currently stored in this.image
+        this.image = loadedImage
+
+        // Update the input values
+        this.inputWidth.value = this.image.width
+        this.inputHeight.value = this.image.height
+    }
+
+    drawing() {
         if (mouseIsPressed && mouseInBounds()) {
             // this.drawStar(mouseX, mouseY, 30, 70)
             this.stamp(mouseX, mouseY, 30, 70)
         }
-
     }
 
     reset() {
@@ -276,7 +375,6 @@ class stampTool extends Tool {
     }
 
     stamp(x, y) {
-        console.log(this.stampSelector.value)
         switch (this.stampSelector.value) {
             case "star":
                 // Draw a star at the given position with the given width and height
@@ -287,11 +385,14 @@ class stampTool extends Tool {
                 // Draw a cloud at the given position with the given width and height
                 this.drawCloud(x, y, this.cloudWidth, this.cloudHeight)
                 break
+            case "custom":
+                // Draw the image at the given position with the given width and height
+                this.drawCustomImage(x, y)
         }
     }
 
     // https://p5js.org/examples/form-star.html
-    drawStar(x, y, radius1, radius2, npoints = 5) {
+    drawStar(x = mouseX, y = mouseY, radius1, radius2, npoints = 5) {
         let angle = TWO_PI / npoints;
         let halfAngle = angle / 2.0;
 
@@ -308,12 +409,26 @@ class stampTool extends Tool {
         endShape(CLOSE);
     }
 
-    drawCloud(x, y, width, height) {
+    drawCloud(x = mouseX, y = mouseY, width, height) {
         // Set Image to draw from center
         imageMode(CENTER)
 
         // Draw the image
         image(this.cloudImage, x, y, width, height)
+
+        // Reset Image Mode to CORNER
+        imageMode(CORNER)
+    }
+
+    drawCustomImage(x = mouseX, y = mouseY, width = this.inputWidth.valueAsNumber, height = this.inputHeight.valueAsNumber) {
+        // Set Image to draw from center
+        imageMode(CENTER)
+
+        // Check if the image is laoded
+        if (this.image && this.image.width > 0) {
+            // Draw the image
+            image(this.image, x, y, width, height)
+        }
 
         // Reset Image Mode to CORNER
         imageMode(CORNER)
