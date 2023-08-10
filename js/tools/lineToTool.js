@@ -1,24 +1,34 @@
-//a tool for drawing straight lines to the screen. Allows the user to preview
-//the a line to the current mouse position before drawing the line to the 
-//pixel array.
-function LineToTool() {
-	this.icon = "assets/lineTo.png";
-	this.name = "LineTo";
+class LineToTool extends Tool {
+	constructor() {
+		super()
 
-	var startMouseX = -1;
-	var startMouseY = -1;
-	var drawing = false;
+		this.name = "LineTo"
+		this.description = "Draw a line to the canvas with your mouse"
+		this.icon = "assets/lineTo.png"
 
-	//draws the line to the screen 
-	this.draw = function () {
+		this.initialize()
+	}
 
+	initialize() {
+		// Initialize Values
+		this.startMouseX = -1
+		this.startMouseY = -1
+		this.drawing = false
+
+		// This is to provide compatibility for classes to work with sketch.js and toolbox.js
+		this.draw = () => { this.drawOnClick() }
+		this.unselectTool = () => { this.reset() }
+		this.populateOptions = () => { this.populateOption() }
+	}
+
+	drawOnClick() {
 		//only draw when mouse is clicked
 		if (mouseIsPressed && mouseInBounds()) {
 			//if it's the start of drawing a new line
-			if (startMouseX == -1) {
-				startMouseX = mouseX;
-				startMouseY = mouseY;
-				drawing = true;
+			if (this.startMouseX == -1) {
+				this.startMouseX = mouseX;
+				this.startMouseY = mouseY;
+				this.drawing = true;
 				//save the current pixel Array
 				loadPixels();
 			}
@@ -29,28 +39,26 @@ function LineToTool() {
 				updatePixels();
 				//draw the line
 				colourP.setStroke()
-				line(startMouseX, startMouseY, mouseX, mouseY);
+				line(this.startMouseX, this.startMouseY, mouseX, mouseY);
 			}
 
 		}
 
-		else if (drawing) {
+		else if (this.drawing) {
 			//save the pixels with the most recent line and reset the
 			//drawing bool and start locations
 			loadPixels();
-			drawing = false;
-			startMouseX = -1;
-			startMouseY = -1;
+			this.drawing = false;
+			this.startMouseX = -1;
+			this.startMouseY = -1;
 		}
-	};
+	}
 
-	this.populateOptions = function () {
+	populateOption() {
 		// Empty the footer's current options
 		select("#footer").html("")
 
 		// Add stroke options to footer
 		colourP.loadColors(true, false)
 	}
-
-
 }
