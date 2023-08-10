@@ -45,6 +45,7 @@ To start, open the `index.html` file using a Live Server extension.
 ## External Sources Utilized
 * p5.js Library from [p5.js](https://p5js.org/)
 * Tool Icons from [freeiconspng.com](freeiconspng.com)
+* Stamp Tool Icon from [uxwing](https://uxwing.com/stamp-icon/)
 * Code by [squishynotions](https://editor.p5js.org/squishynotions/sketches) from [p5.js Web Editor](https://editor.p5js.org/squishynotions/sketches/Ax195WTdz)
 
 ## Tools Utilized

@@ -113,7 +113,7 @@ class imageTool extends Tool {
         this.initialize()
     }
 
-    populateOption(settings = false) {
+    populateOption() {
         // Empty the footer's current options
         select("#footer").html("")
 

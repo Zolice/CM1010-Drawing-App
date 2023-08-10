@@ -32,6 +32,7 @@ function setup() {
 	
 	toolbox.addTool(new scissorTool())
 	toolbox.addTool(new imageTool())
+	toolbox.addTool(new stampTool())
 }
 
 function draw() {
