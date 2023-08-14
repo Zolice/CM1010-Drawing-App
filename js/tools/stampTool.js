@@ -29,11 +29,6 @@ class stampTool extends Tool {
         this.starStampOptions = this.createStarStampOptions()
         this.cloudStampOptions = this.createCloudStampOptions()
         this.customStampOptions = this.createCustomStampOptions()
-
-        // This is to provide compatibility for classes to work with sketch.js and toolbox.js
-        this.draw = () => { this.drawing() }
-        this.unselectTool = () => { this.reset() }
-        this.populateOptions = () => { this.populateOption() }
     }
 
     createStampSelector() {
@@ -71,7 +66,7 @@ class stampTool extends Tool {
 
         // Change options when selector is changed
         selector.onchange = () => {
-            this.populateOption()
+            this.populateOptions()
         }
 
         return selector
@@ -316,7 +311,7 @@ class stampTool extends Tool {
 
             // Reset Options
             this.customStampOptions = this.createCustomStampOptions()
-            this.populateOption()
+            this.populateOptions()
         }
     }
 
@@ -329,19 +324,19 @@ class stampTool extends Tool {
         this.inputHeight.value = this.image.height
     }
 
-    drawing() {
+    draw() {
         if (mouseIsPressed && mouseInBounds()) {
             // this.drawStar(mouseX, mouseY, 30, 70)
             this.stamp(mouseX, mouseY, 30, 70)
         }
     }
 
-    reset() {
+    unselectTool() {
         // Reset this tool
         this.initialize()
     }
 
-    populateOption() {
+    populateOptions() {
         // Declare default values
         let extraOptions = null
         let colourOptions = false

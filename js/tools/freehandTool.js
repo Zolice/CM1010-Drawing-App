@@ -10,13 +10,9 @@ class FreehandTool extends Tool {
 	}
 
 	initialize() {
-		// This is to provide compatibility for classes to work with sketch.js and toolbox.js
-		this.draw = () => { this.drawing() }
-		this.unselectTool = () => { this.reset() }
-		this.populateOptions = () => { this.populateOption() }
 	}
 
-	drawing() {
+	draw() {
 		//if the mouse is pressed
 		if (mouseIsPressed && mouseInBounds()) {
 			//check if they previousX and Y are -1. set them to the current
@@ -45,11 +41,11 @@ class FreehandTool extends Tool {
 		}
 	}
 
-	reset() {
+	unselectTool() {
 		this.initialize()
 	}
 
-	populateOption() {
+	populateOptions() {
 		// Empty the footer's current options
 		select("#footer").html("")
 

@@ -14,14 +14,9 @@ class LineToTool extends Tool {
 		this.startMouseX = -1
 		this.startMouseY = -1
 		this.drawing = false
-
-		// This is to provide compatibility for classes to work with sketch.js and toolbox.js
-		this.draw = () => { this.drawOnClick() }
-		this.unselectTool = () => { this.reset() }
-		this.populateOptions = () => { this.populateOption() }
 	}
 
-	drawOnClick() {
+	draw() {
 		//only draw when mouse is clicked
 		if (mouseIsPressed && mouseInBounds()) {
 			//if it's the start of drawing a new line
@@ -54,7 +49,7 @@ class LineToTool extends Tool {
 		}
 	}
 
-	populateOption() {
+	populateOptions() {
 		// Empty the footer's current options
 		select("#footer").html("")
 

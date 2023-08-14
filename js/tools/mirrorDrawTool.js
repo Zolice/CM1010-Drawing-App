@@ -24,15 +24,9 @@ class mirrorDrawTool extends Tool {
         //mouse coordinates for the other side of the Line of symmetry.
         this.previousOppositeMouseX = -1;
         this.previousOppositeMouseY = -1;
-
-        // This is used to provide compatibility for classes to work with sketch.js and toolbox.js
-        // Set draw() to this.draw
-        this.draw = () => { this.drawing() }
-        this.unselectTool = () => { this.reset() }
-        this.populateOptions = () => { this.populateOption() }
     }
 
-    drawing() {
+    draw() {
         //display the last save state of pixels
         updatePixels();
 
@@ -130,7 +124,7 @@ class mirrorDrawTool extends Tool {
 
     //adds a button and click handler to the options area. When clicked
     //toggle the line of symmetry between horizonatl to vertical
-    populateOption() {
+    populateOptions() {
         // Create a button element
         let button = document.createElement('div')
         button.id = 'directionButton'

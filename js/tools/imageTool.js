@@ -38,14 +38,9 @@ class imageTool extends Tool {
 
         this.corners = [] // top-left, top-right, bottom-right, bottom-left
         this.sides = [] // top, right, bottom, left
-
-        // This is to provide compatibility for classes to work with sketch.js and toolbox.js
-        this.draw = () => { this.drawing() }
-        this.unselectTool = () => { this.reset() }
-        this.populateOptions = () => { this.populateOption() }
     }
 
-    drawing() {
+    draw() {
         // Check if mouse is pressed
         // Check if mouse is within Canvas
         // Check if an image is loaded
@@ -94,7 +89,7 @@ class imageTool extends Tool {
         }
     }
 
-    reset() {
+    unselectTool() {
         // Reset the image
         // Copy this.edited to pixels[] to update the canvas
         pixels = this.original.slice()
@@ -113,7 +108,7 @@ class imageTool extends Tool {
         this.initialize()
     }
 
-    populateOption() {
+    populateOptions() {
         // Empty the footer's current options
         select("#footer").html("")
 

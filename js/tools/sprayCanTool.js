@@ -13,15 +13,9 @@ class SprayCanTool extends Tool {
         // Initialize Values
         this.count = 13;
         this.spread = 10;
-
-        // This is used to provide compatibility for classes to work with sketch.js and toolbox.js
-        // Set draw() to this.draw
-        this.draw = () => { this.drawing() }
-        this.unselectTool = () => { this.reset() }
-        this.populateOptions = () => { this.populateOption() }
     }
 
-    drawing() {
+    draw() {
         var r = random(5, 10);
         if (mouseIsPressed && mouseInBounds()) {
             for (var i = 0; i < this.count; i++) {
@@ -31,7 +25,7 @@ class SprayCanTool extends Tool {
         }
     }
 
-    populateOption() {
+    populateOptions() {
         // Empty the footer's current options
         select("#footer").html("")
 
