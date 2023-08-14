@@ -38,15 +38,9 @@ class scissorTool extends Tool {
         this.sides = [] // top, right, bottom, left
 
         this.dragging = false
-
-        // This is used to provide compatibility for classes to work with sketch.js and toolbox.js
-        this.draw = () => { this.drawing() }
-        this.unselectTool = () => { this.reset() }
-        this.populateOptions = () => { this.populateOption() }
     }
 
-    // TODO: Rename this to draw() when changing other original tools to classes
-    drawing() {
+    draw() {
         // Check if the mouse is pressed
         if (mouseIsPressed && mouseInBounds()) {
             // Check if selection has been made
@@ -229,8 +223,7 @@ class scissorTool extends Tool {
         }
     }
 
-    // Rename this to unselectTool() when changing other original tools to classes
-    reset() {
+    unselectTool() {
         // Reset the image
         // Copy this.edited to pixels[] to update the canvas
         pixels = this.edited.slice()
@@ -249,8 +242,7 @@ class scissorTool extends Tool {
         this.initialize()
     }
 
-    // Rename this to populateOptions() when changing other original tools to classes
-    populateOption() {
+    populateOptions() {
         let button = document.createElement('div')
         button.id = 'resetButton'
         button.className = 'toolOptionsWrapper toolOptionsButton'

@@ -4,7 +4,7 @@ var toolbox = null;
 var colourP = null;
 var helpers = null;
 
-window.onload = function() {
+window.onload = function () {
 	//create a canvas to fill the content div from index.html
 	canvasContainer = select('#content');
 	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height - 4); //subtract 4 for the border
@@ -29,19 +29,14 @@ function setup() {
 	toolbox.addTool(new LineToTool())
 	toolbox.addTool(new SprayCanTool())
 	toolbox.addTool(new mirrorDrawTool())
-	
+
 	toolbox.addTool(new scissorTool())
 	toolbox.addTool(new imageTool())
+	toolbox.addTool(new stampTool())
 }
 
 function draw() {
 	//call the draw function from the selected tool.
-	//hasOwnProperty is a javascript function that tests
-	//if an object contains a particular method or property
-	//if there isn't a draw method the app will alert the user
-	if (toolbox.selectedTool.hasOwnProperty("draw")) {
-		toolbox.selectedTool.draw();
-	} else {
-		alert("it doesn't look like your tool has a draw method!");
-	}
+	// As each tool extends base class Tool, they all have a draw() function
+	toolbox.selectedTool.draw()
 }

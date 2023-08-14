@@ -291,6 +291,10 @@ body {
 	cursor: pointer;
 }
 
+.toolOptionsSelectOption {
+	color: black;
+}
+
 .colorSelector {
 	border: none;
 	border-radius: 1em;

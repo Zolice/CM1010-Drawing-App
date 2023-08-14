@@ -1,92 +1,101 @@
-function SprayCanTool() {
+class SprayCanTool extends Tool {
+    constructor() {
+        super()
 
-	this.name = "sprayCanTool";
-	this.icon = "assets/sprayCan.png";
+        this.name = "sprayCanTool";
+        this.icon = "assets/sprayCan.png";
+        this.description = "Spray paint on the canvas with your mouse";
 
-	this.count = 13;
-	this.spread = 10;
+        this.initialize()
+    }
 
-	this.draw = function () {
-		var r = random(5, 10);
-		if (mouseIsPressed && mouseInBounds()) {
-			for (var i = 0; i < this.count; i++) {
-				colourP.setStroke()
-				point(random(mouseX - this.spread, mouseX + this.spread), random(mouseY - this.spread, mouseY + this.spread));
-			}
-		}
-	};
+    initialize() {
+        // Initialize Values
+        this.count = 13;
+        this.spread = 10;
+    }
 
-	this.populateOptions = function () {
-		// Empty the footer's current options
-		select("#footer").html("")
+    draw() {
+        var r = random(5, 10);
+        if (mouseIsPressed && mouseInBounds()) {
+            for (var i = 0; i < this.count; i++) {
+                colourP.setStroke()
+                point(random(mouseX - this.spread, mouseX + this.spread), random(mouseY - this.spread, mouseY + this.spread));
+            }
+        }
+    }
 
-		// Add Spread options to footer
-		// Create a text element to indicate Spread
-		let spreadText = document.createElement("h5")
-		spreadText.className = "toolOptionsType toolOptionsText"
-		spreadText.innerHTML = "Spread"
+    populateOptions() {
+        // Empty the footer's current options
+        select("#footer").html("")
 
-		// Append text element to footer
-		select("#footer").elt.appendChild(spreadText)
+        // Add Spread options to footer
+        // Create a text element to indicate Spread
+        let spreadText = document.createElement("h5")
+        spreadText.className = "toolOptionsType toolOptionsText"
+        spreadText.innerHTML = "Spread"
 
-		// Create a Div to hold the spread options
-		let spreadDiv = document.createElement("div")
-		spreadDiv.className = "toolOptionsWrapper"
+        // Append text element to footer
+        select("#footer").elt.appendChild(spreadText)
 
-		// Create a number input element to hold the spread Size
-		let spreadSizeInput = document.createElement("input")
-		spreadSizeInput.className = "textSelector"
-		spreadSizeInput.type = "number"
-		spreadSizeInput.id = "spreadSize"
-		spreadSizeInput.value = this.spread
-		spreadSizeInput.step = 0.1
+        // Create a Div to hold the spread options
+        let spreadDiv = document.createElement("div")
+        spreadDiv.className = "toolOptionsWrapper"
 
-		// Call the callback function when the input is changed
-		spreadSizeInput.oninput = () => { 
-			// Update the value
-			this.spread = spreadSizeInput.valueAsNumber
-		}
+        // Create a number input element to hold the spread Size
+        let spreadSizeInput = document.createElement("input")
+        spreadSizeInput.className = "textSelector"
+        spreadSizeInput.type = "number"
+        spreadSizeInput.id = "spreadSize"
+        spreadSizeInput.value = this.spread
+        spreadSizeInput.step = 0.1
 
-		// Add the number input element to the spread divider
-		spreadDiv.appendChild(spreadSizeInput)
+        // Call the callback function when the input is changed
+        spreadSizeInput.oninput = () => {
+            // Update the value
+            this.spread = spreadSizeInput.valueAsNumber
+        }
 
-		// Add the spread divider to the footer
-		select("#footer").elt.appendChild(spreadDiv)
+        // Add the number input element to the spread divider
+        spreadDiv.appendChild(spreadSizeInput)
 
-		// Add count options to footer
-		// Create a text element to indicate count
-		let countText = document.createElement("h5")
-		countText.className = "toolOptionsType toolOptionsText"
-		countText.innerHTML = "Count"
+        // Add the spread divider to the footer
+        select("#footer").elt.appendChild(spreadDiv)
 
-		// Append text element to footer
-		select("#footer").elt.appendChild(countText)
+        // Add count options to footer
+        // Create a text element to indicate count
+        let countText = document.createElement("h5")
+        countText.className = "toolOptionsType toolOptionsText"
+        countText.innerHTML = "Count"
 
-		// Create a Div to hold the count options
-		let countDiv = document.createElement("div")
-		countDiv.className = "toolOptionsWrapper"
+        // Append text element to footer
+        select("#footer").elt.appendChild(countText)
 
-		// Create a number input element to hold the count Size
-		let countSizeInput = document.createElement("input")
-		countSizeInput.className = "textSelector"
-		countSizeInput.type = "number"
-		countSizeInput.id = "countSize"
-		countSizeInput.value = this.count
-		countSizeInput.step = 0.1
+        // Create a Div to hold the count options
+        let countDiv = document.createElement("div")
+        countDiv.className = "toolOptionsWrapper"
 
-		// Call the callback function when the input is changed
-		countSizeInput.oninput = () => { 
-			// Update the value
-			this.count = countSizeInput.valueAsNumber
-		}
+        // Create a number input element to hold the count Size
+        let countSizeInput = document.createElement("input")
+        countSizeInput.className = "textSelector"
+        countSizeInput.type = "number"
+        countSizeInput.id = "countSize"
+        countSizeInput.value = this.count
+        countSizeInput.step = 0.1
 
-		// Add the number input element to the count divider
-		countDiv.appendChild(countSizeInput)
+        // Call the callback function when the input is changed
+        countSizeInput.oninput = () => {
+            // Update the value
+            this.count = countSizeInput.valueAsNumber
+        }
 
-		// Add the count divider to the footer
-		select("#footer").elt.appendChild(countDiv)
+        // Add the number input element to the count divider
+        countDiv.appendChild(countSizeInput)
 
-		// Add spread options to footer
-		colourP.loadColors(true, false)
-	}
+        // Add the count divider to the footer
+        select("#footer").elt.appendChild(countDiv)
+
+        // Add spread options to footer
+        colourP.loadColors(true, false)
+    }
 }

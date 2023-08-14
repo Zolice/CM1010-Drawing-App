@@ -53,8 +53,7 @@ function Toolbox() {
 		for (var i = 0; i < this.tools.length; i++) {
 			if (this.tools[i].name == toolName) {
 				//if the tool has an unselectTool method run it.
-				if (this.selectedTool != null && this.selectedTool.hasOwnProperty(
-					"unselectTool")) {
+				if (this.selectedTool != null) {
 					this.selectedTool.unselectTool();
 				}
 				//select the tool and highlight it on the toolbar
@@ -62,9 +61,8 @@ function Toolbox() {
 				select("#" + toolName + "ToolButton").addClass('toolButtonSelected');
 
 				//if the tool has an options area. Populate it now.
-				if (this.selectedTool.hasOwnProperty("populateOptions")) {
-					this.selectedTool.populateOptions();
-				}
+				this.selectedTool.populateOptions();
+
 			}
 		}
 	};
