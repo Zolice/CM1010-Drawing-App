@@ -286,45 +286,4 @@ class imageTool extends Tool {
         // Draw the image to the canvas
         drawImage(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
     }
-
-    drawImage(border = true) {
-        // Check if there's a loaded image
-        if (!this.loaded) return
-
-        // Set fill and stroke
-        // Set Stroke
-        stroke(this.strokeColor)
-        strokeWeight(this.strokeWeight)
-
-        // Set fill
-        fill(this.fillColor)
-
-        // Make the rectangle have dotted lines
-        drawingContext.setLineDash(this.lineDash)
-
-        // Draw the border
-        if (border) rect(this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight)
-
-        // Draw the image to the canvas
-        image(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight)
-
-        // Draw buttons at the 4 corners to adjust the size
-        // Reset Line Dash
-        drawingContext.setLineDash([0, 0])
-
-        // Add Fill and Stroke Colours
-        fill(this.buttonColor)
-        stroke(this.buttonColor)
-
-        // Draw the buttons
-        if (border) {
-            this.corners.forEach(corner => {
-                ellipse(corner.x, corner.y, this.buttonSize, this.buttonSize)
-            })
-
-            this.sides.forEach(side => {
-                ellipse(side.x, side.y, this.buttonSize, this.buttonSize)
-            })
-        }
-    }
 }
