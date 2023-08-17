@@ -78,42 +78,42 @@ class scissorTool extends Tool {
             }
             // Check if the selection is made
             else {
-                // Check if the mouse is clicking on the selection
-                if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
-                    // Check if this is the first instance of clicking the selection
-                    if (this.clickX <= 0) {
-                        this.clickX = mouseX
-                        this.clickY = mouseY
-                    }
+                // // Check if the mouse is clicking on the selection
+                // if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
+                //     // Check if this is the first instance of clicking the selection
+                //     if (this.clickX <= 0) {
+                //         this.clickX = mouseX
+                //         this.clickY = mouseY
+                //     }
 
-                    // Move the selection accordingly
-                    this.selectedX += mouseX - this.clickX
-                    this.selectedY += mouseY - this.clickY
+                //     // Move the selection accordingly
+                //     this.selectedX += mouseX - this.clickX
+                //     this.selectedY += mouseY - this.clickY
 
-                    // Move the corners and side buttons accordingly
-                    this.corners.forEach(corner => {
-                        corner.x += mouseX - this.clickX
-                        corner.y += mouseY - this.clickY
-                    })
+                //     // Move the corners and side buttons accordingly
+                //     this.corners.forEach(corner => {
+                //         corner.x += mouseX - this.clickX
+                //         corner.y += mouseY - this.clickY
+                //     })
 
-                    this.sides.forEach(side => {
-                        side.x += mouseX - this.clickX
-                        side.y += mouseY - this.clickY
-                    })
+                //     this.sides.forEach(side => {
+                //         side.x += mouseX - this.clickX
+                //         side.y += mouseY - this.clickY
+                //     })
 
-                    // Set the click values to the current 
-                    this.clickX = mouseX
-                    this.clickY = mouseY
+                //     // Set the click values to the current 
+                //     this.clickX = mouseX
+                //     this.clickY = mouseY
 
-                    // Copy this.edited to pixels[] to update the canvas
-                    pixels = this.edited.slice()
+                //     // Copy this.edited to pixels[] to update the canvas
+                //     pixels = this.edited.slice()
 
-                    // Push the modifications to pixels
-                    updatePixels()
+                //     // Push the modifications to pixels
+                //     updatePixels()
 
-                    // Draw the image to the canvas
-                    drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
-                }
+                //     // Draw the image to the canvas
+                //     drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
+                // }
             }
         }
         // Check if the mouse has been released
@@ -166,9 +166,6 @@ class scissorTool extends Tool {
             this.selectedWidth = bottomRightX - topLeftX
             this.selectedHeight = bottomRightY - topLeftY
 
-            console.log(this.selectedWidth)
-            console.log(this.selectedHeight)
-
             // Check if selection contains any pixels
             if (this.selectedWidth <= 0 || this.selectedHeight <= 0) {
                 // There is nothing selected, it's a straight line selection
@@ -220,6 +217,56 @@ class scissorTool extends Tool {
             // Reset the previous mouse values
             this.clickX = -1
             this.clickY = -1
+
+            // Reset mouse drag
+            this.dragging = false
+        }
+    }
+
+    mouseDragged() {
+        // Check if the mouse is pressed 
+        // Check if selection has been made
+        // Do this by checking this.selectedPixels
+        if (mouseIsPressed && mouseInBounds() && this.selectedPixels.width > 0) {
+            // Check if the mouse is clicking on the selection
+            if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
+                // Check if this is the first instance of clicking the selection
+                if (this.clickX <= 0) {
+                    this.clickX = mouseX
+                    this.clickY = mouseY
+                    this.dragging = true
+                }
+            }
+            if (this.dragging) {
+                // Move the selection accordingly
+                this.selectedX += mouseX - this.clickX
+                this.selectedY += mouseY - this.clickY
+
+                // Move the corners and side buttons accordingly
+                this.corners.forEach(corner => {
+                    corner.x += mouseX - this.clickX
+                    corner.y += mouseY - this.clickY
+                })
+
+                this.sides.forEach(side => {
+                    side.x += mouseX - this.clickX
+                    side.y += mouseY - this.clickY
+                })
+
+                // Set the click values to the current 
+                this.clickX = mouseX
+                this.clickY = mouseY
+
+                // Copy this.edited to pixels[] to update the canvas
+                pixels = this.edited.slice()
+
+                // Push the modifications to pixels
+                updatePixels()
+
+                // Draw the image to the canvas
+                drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
+            }
+
         }
     }
 

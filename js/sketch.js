@@ -40,3 +40,9 @@ function draw() {
 	// As each tool extends base class Tool, they all have a draw() function
 	toolbox.selectedTool.draw()
 }
+
+function mouseDragged() {
+	// Call the mouseDragged() function from the selected tool
+	// As each tool extends base class Tool, they all have a mouseDragged() function
+	toolbox.selectedTool.mouseDragged()
+}

@@ -20,6 +20,11 @@ class Tool {
         return
     }
 
+    mouseDragged(){
+        // This is a stub
+        return
+    }
+
     unselectTool() {
         // This is a stub
         return
