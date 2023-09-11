@@ -78,45 +78,7 @@ class imageTool extends Tool {
         // Check if mouse is pressed
         // Check if mouse is within Canvas
         // Check if an image is loaded
-        if (mouseIsPressed && mouseInBounds() && this.loaded) {
-            // // Check if mouse is clicking on the selection
-            // if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
-            //     // Check if this is the first instance of clicking the selection
-            //     if (this.previousMouseX <= 0) {
-            //         this.previousMouseX = mouseX
-            //         this.previousMouseY = mouseY
-            //     }
-
-            //     // Move the selection accordingly
-            //     this.selectedX += mouseX - this.previousMouseX
-            //     this.selectedY += mouseY - this.previousMouseY
-
-            //     // Move the corners and side buttons accordingly
-            //     this.corners.forEach(corner => {
-            //         corner.x += mouseX - this.previousMouseX
-            //         corner.y += mouseY - this.previousMouseY
-            //     })
-
-            //     this.sides.forEach(side => {
-            //         side.x += mouseX - this.previousMouseX
-            //         side.y += mouseY - this.previousMouseY
-            //     })
-
-            //     // Set the click values to the current 
-            //     this.previousMouseX = mouseX
-            //     this.previousMouseY = mouseY
-
-            //     // Copy this.original to pixels[] to update the canvas
-            //     pixels = this.original.slice()
-
-            //     // Push the modifications to pixels
-            //     updatePixels()
-
-            //     // Draw the image to the canvas
-            //     drawImage(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
-            // }
-        }
-        else {
+        if (!(mouseIsPressed && mouseInBounds() && this.loaded)) {
             // Reset previousMouse coordinates
             this.previousMouseX = -1
             this.previousMouseY = -1
@@ -186,6 +148,9 @@ class imageTool extends Tool {
 
         // Save the image
         loadPixels()
+
+        // Re-populate options
+        this.populateOptions()
 
         // Reset this tool
         this.initialize()

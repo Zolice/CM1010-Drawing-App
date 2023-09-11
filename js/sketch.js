@@ -1,16 +1,16 @@
 //global variables that will store the toolbox colour palette
 //amnd the helper functions
-var toolbox = null;
-var colourP = null;
-var helpers = null;
+var toolbox = null
+var colourP = null
+var helpers = null
 
 window.onload = function () {
 	//create a canvas to fill the content div from index.html
-	canvasContainer = select('#content');
-	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height - 4); //subtract 4 for the border
-	c.parent("content");
+	canvasContainer = select('#content')
+	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height - 4) //subtract 4 for the border
+	c.parent("content")
 
-	background(255);
+	background(255)
 }
 
 function setup() {
@@ -18,11 +18,11 @@ function setup() {
 	frameRate(60)
 
 	//create helper functions and the colour palette
-	helpers = new HelperFunctions();
-	colourP = new ColourPalette();
+	helpers = new HelperFunctions()
+	colourP = new ColourPalette()
 
 	//create a toolbox for storing the tools
-	toolbox = new Toolbox();
+	toolbox = new Toolbox()
 
 	//add the tools to the toolbox.
 	toolbox.addTool(new FreehandTool())
