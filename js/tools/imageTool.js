@@ -12,7 +12,7 @@ class imageTool extends Tool {
             "strokeColor": color(0, 0, 0, 204), // 80% Transparent
             "strokeWeight": 2,
             "fillColor": color(0, 0, 0, 0), // 100% Transparent
-            "lineDash": [0,8],
+            "lineDash": [0, 8],
             "buttonColor": color(0, 0, 0, 204), // 80% Transparent
             "buttonSize": 5
         }
@@ -38,9 +38,95 @@ class imageTool extends Tool {
 
         this.corners = [] // top-left, top-right, bottom-right, bottom-left
         this.sides = [] // top, right, bottom, left
+
+        this.dragging = false
+
+        this.createWidthHeightElements()
+    }
+
+    createWidthHeightElements() {
+        // Create Width Element
+        // Create an input element
+        this.inputWidth = document.createElement('input')
+        this.inputWidth.className = 'textSelector'
+        this.inputWidth.id = 'imageWidthInput'
+        this.inputWidth.type = 'number'
+
+        // Adjust the width in input.oninput
+        this.inputWidth.oninput = () => {
+            this.selectedWidth = this.inputWidth.valueAsNumber
+            this.calculateCornersAndSides()
+            this.updateImage()
+        }
+
+        // Create Height Element
+        // Create an input element
+        this.inputHeight = document.createElement('input')
+        this.inputHeight.className = 'textSelector'
+        this.inputHeight.id = 'imageHeightInput'
+        this.inputHeight.type = 'number'
+
+        // Adjust the height in input.oninput
+        this.inputHeight.oninput = () => {
+            this.selectedHeight = this.inputHeight.valueAsNumber
+            this.calculateCornersAndSides()
+            this.updateImage()
+        }
     }
 
     draw() {
+        // Check if mouse is pressed
+        // Check if mouse is within Canvas
+        // Check if an image is loaded
+        if (mouseIsPressed && mouseInBounds() && this.loaded) {
+            // // Check if mouse is clicking on the selection
+            // if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
+            //     // Check if this is the first instance of clicking the selection
+            //     if (this.previousMouseX <= 0) {
+            //         this.previousMouseX = mouseX
+            //         this.previousMouseY = mouseY
+            //     }
+
+            //     // Move the selection accordingly
+            //     this.selectedX += mouseX - this.previousMouseX
+            //     this.selectedY += mouseY - this.previousMouseY
+
+            //     // Move the corners and side buttons accordingly
+            //     this.corners.forEach(corner => {
+            //         corner.x += mouseX - this.previousMouseX
+            //         corner.y += mouseY - this.previousMouseY
+            //     })
+
+            //     this.sides.forEach(side => {
+            //         side.x += mouseX - this.previousMouseX
+            //         side.y += mouseY - this.previousMouseY
+            //     })
+
+            //     // Set the click values to the current 
+            //     this.previousMouseX = mouseX
+            //     this.previousMouseY = mouseY
+
+            //     // Copy this.original to pixels[] to update the canvas
+            //     pixels = this.original.slice()
+
+            //     // Push the modifications to pixels
+            //     updatePixels()
+
+            //     // Draw the image to the canvas
+            //     drawImage(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
+            // }
+        }
+        else {
+            // Reset previousMouse coordinates
+            this.previousMouseX = -1
+            this.previousMouseY = -1
+
+            // Reset mouse drag
+            this.dragging = false
+        }
+    }
+
+    mouseDragged() {
         // Check if mouse is pressed
         // Check if mouse is within Canvas
         // Check if an image is loaded
@@ -51,8 +137,10 @@ class imageTool extends Tool {
                 if (this.previousMouseX <= 0) {
                     this.previousMouseX = mouseX
                     this.previousMouseY = mouseY
+                    this.dragging = true
                 }
-
+            }
+            if (this.dragging) {
                 // Move the selection accordingly
                 this.selectedX += mouseX - this.previousMouseX
                 this.selectedY += mouseY - this.previousMouseY
@@ -81,11 +169,6 @@ class imageTool extends Tool {
                 // Draw the image to the canvas
                 drawImage(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
             }
-        }
-        else {
-            // Reset previousMouse coordinates
-            this.previousMouseX = -1
-            this.previousMouseY = -1
         }
     }
 
@@ -130,26 +213,13 @@ class imageTool extends Tool {
         // Create a divider
         button = document.createElement('div')
         button.id = 'imageSizeButton'
-        button.className = 'toolOptionsWrapper toolOptionsButton'
+        button.className = 'toolOptionsWrapper'
 
         // Create a text element
         let text = document.createElement('h5')
         text.className = 'toolOptionsSetting toolOptionsText'
         text.id = 'imageWidth'
         text.innerHTML = 'Width'
-
-        // Create an input element
-        this.inputWidth = document.createElement('input')
-        this.inputWidth.className = 'textSelector'
-        this.inputWidth.id = 'imageWidthInput'
-        this.inputWidth.type = 'number'
-
-        // Adjust the width in input.oninput
-        this.inputWidth.oninput = () => {
-            this.selectedWidth = this.inputWidth.valueAsNumber
-            this.calculateCornersAndSides()
-            this.updateImage()
-        }
 
         // Append text and input to button
         button.appendChild(text)
@@ -161,26 +231,13 @@ class imageTool extends Tool {
         // Create a divider
         button = document.createElement('div')
         button.id = 'imageSizeButton'
-        button.className = 'toolOptionsWrapper toolOptionsButton'
+        button.className = 'toolOptionsWrapper'
 
         // Create a text element
         text = document.createElement('h5')
         text.className = 'toolOptionsSetting toolOptionsText'
         text.id = 'imageHeight'
         text.innerHTML = 'Height'
-
-        // Create an input element
-        this.inputHeight = document.createElement('input')
-        this.inputHeight.className = 'textSelector'
-        this.inputHeight.id = 'imageHeightInput'
-        this.inputHeight.type = 'number'
-
-        // Adjust the height in input.oninput
-        this.inputHeight.oninput = () => {
-            this.selectedHeight = this.inputHeight.valueAsNumber
-            this.calculateCornersAndSides()
-            this.updateImage()
-        }
 
         // Append text and input to button
         button.appendChild(text)
@@ -285,46 +342,5 @@ class imageTool extends Tool {
 
         // Draw the image to the canvas
         drawImage(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
-    }
-
-    drawImage(border = true) {
-        // Check if there's a loaded image
-        if (!this.loaded) return
-
-        // Set fill and stroke
-        // Set Stroke
-        stroke(this.strokeColor)
-        strokeWeight(this.strokeWeight)
-
-        // Set fill
-        fill(this.fillColor)
-
-        // Make the rectangle have dotted lines
-        drawingContext.setLineDash(this.lineDash)
-
-        // Draw the border
-        if (border) rect(this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight)
-
-        // Draw the image to the canvas
-        image(this.image, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight)
-
-        // Draw buttons at the 4 corners to adjust the size
-        // Reset Line Dash
-        drawingContext.setLineDash([0, 0])
-
-        // Add Fill and Stroke Colours
-        fill(this.buttonColor)
-        stroke(this.buttonColor)
-
-        // Draw the buttons
-        if (border) {
-            this.corners.forEach(corner => {
-                ellipse(corner.x, corner.y, this.buttonSize, this.buttonSize)
-            })
-
-            this.sides.forEach(side => {
-                ellipse(side.x, side.y, this.buttonSize, this.buttonSize)
-            })
-        }
     }
 }

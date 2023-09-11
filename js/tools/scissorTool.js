@@ -38,6 +38,38 @@ class scissorTool extends Tool {
         this.sides = [] // top, right, bottom, left
 
         this.dragging = false
+
+        this.createWidthHeightElements()
+    }
+
+    createWidthHeightElements() {
+        // Create Width Element
+        // Create an input element
+        this.inputWidth = document.createElement('input')
+        this.inputWidth.className = 'textSelector'
+        this.inputWidth.id = 'imageWidthInput'
+        this.inputWidth.type = 'number'
+
+        // Adjust the width in input.oninput
+        this.inputWidth.oninput = () => {
+            this.selectedWidth = this.inputWidth.valueAsNumber
+            this.calculateCornersAndSides()
+            this.updateImage()
+        }
+
+        // Create Height Element
+        // Create an input element
+        this.inputHeight = document.createElement('input')
+        this.inputHeight.className = 'textSelector'
+        this.inputHeight.id = 'imageHeightInput'
+        this.inputHeight.type = 'number'
+
+        // Adjust the height in input.oninput
+        this.inputHeight.oninput = () => {
+            this.selectedHeight = this.inputHeight.valueAsNumber
+            this.calculateCornersAndSides()
+            this.updateImage()
+        }
     }
 
     draw() {
@@ -78,42 +110,42 @@ class scissorTool extends Tool {
             }
             // Check if the selection is made
             else {
-                // Check if the mouse is clicking on the selection
-                if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
-                    // Check if this is the first instance of clicking the selection
-                    if (this.clickX <= 0) {
-                        this.clickX = mouseX
-                        this.clickY = mouseY
-                    }
+                // // Check if the mouse is clicking on the selection
+                // if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
+                //     // Check if this is the first instance of clicking the selection
+                //     if (this.clickX <= 0) {
+                //         this.clickX = mouseX
+                //         this.clickY = mouseY
+                //     }
 
-                    // Move the selection accordingly
-                    this.selectedX += mouseX - this.clickX
-                    this.selectedY += mouseY - this.clickY
+                //     // Move the selection accordingly
+                //     this.selectedX += mouseX - this.clickX
+                //     this.selectedY += mouseY - this.clickY
 
-                    // Move the corners and side buttons accordingly
-                    this.corners.forEach(corner => {
-                        corner.x += mouseX - this.clickX
-                        corner.y += mouseY - this.clickY
-                    })
+                //     // Move the corners and side buttons accordingly
+                //     this.corners.forEach(corner => {
+                //         corner.x += mouseX - this.clickX
+                //         corner.y += mouseY - this.clickY
+                //     })
 
-                    this.sides.forEach(side => {
-                        side.x += mouseX - this.clickX
-                        side.y += mouseY - this.clickY
-                    })
+                //     this.sides.forEach(side => {
+                //         side.x += mouseX - this.clickX
+                //         side.y += mouseY - this.clickY
+                //     })
 
-                    // Set the click values to the current 
-                    this.clickX = mouseX
-                    this.clickY = mouseY
+                //     // Set the click values to the current 
+                //     this.clickX = mouseX
+                //     this.clickY = mouseY
 
-                    // Copy this.edited to pixels[] to update the canvas
-                    pixels = this.edited.slice()
+                //     // Copy this.edited to pixels[] to update the canvas
+                //     pixels = this.edited.slice()
 
-                    // Push the modifications to pixels
-                    updatePixels()
+                //     // Push the modifications to pixels
+                //     updatePixels()
 
-                    // Draw the image to the canvas
-                    drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
-                }
+                //     // Draw the image to the canvas
+                //     drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
+                // }
             }
         }
         // Check if the mouse has been released
@@ -166,14 +198,15 @@ class scissorTool extends Tool {
             this.selectedWidth = bottomRightX - topLeftX
             this.selectedHeight = bottomRightY - topLeftY
 
-            console.log(this.selectedWidth)
-            console.log(this.selectedHeight)
+            // Update the image size input values
+            this.inputWidth.value = this.selectedWidth
+            this.inputHeight.value = this.selectedHeight
 
             // Check if selection contains any pixels
             if (this.selectedWidth <= 0 || this.selectedHeight <= 0) {
                 // There is nothing selected, it's a straight line selection
                 // Reset the tool
-                return this.reset()
+                return this.unselectTool()
             }
 
             // Get the pixels of the selection from this.original
@@ -212,6 +245,9 @@ class scissorTool extends Tool {
             // loadPixels()
             // updatePixels()
 
+            // Add Width and Height options to the footer
+            this.populateOptions(true)
+
             // Reset the previous mouse values
             this.previousMouseX = -1
             this.previousMouseY = -1
@@ -220,6 +256,56 @@ class scissorTool extends Tool {
             // Reset the previous mouse values
             this.clickX = -1
             this.clickY = -1
+
+            // Reset mouse drag
+            this.dragging = false
+        }
+    }
+
+    mouseDragged() {
+        // Check if the mouse is pressed 
+        // Check if selection has been made
+        // Do this by checking this.selectedPixels
+        if (mouseIsPressed && mouseInBounds() && this.selectedPixels.width > 0) {
+            // Check if the mouse is clicking on the selection
+            if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
+                // Check if this is the first instance of clicking the selection
+                if (this.clickX <= 0) {
+                    this.clickX = mouseX
+                    this.clickY = mouseY
+                    this.dragging = true
+                }
+            }
+            if (this.dragging) {
+                // Move the selection accordingly
+                this.selectedX += mouseX - this.clickX
+                this.selectedY += mouseY - this.clickY
+
+                // Move the corners and side buttons accordingly
+                this.corners.forEach(corner => {
+                    corner.x += mouseX - this.clickX
+                    corner.y += mouseY - this.clickY
+                })
+
+                this.sides.forEach(side => {
+                    side.x += mouseX - this.clickX
+                    side.y += mouseY - this.clickY
+                })
+
+                // Set the click values to the current 
+                this.clickX = mouseX
+                this.clickY = mouseY
+
+                // Copy this.edited to pixels[] to update the canvas
+                pixels = this.edited.slice()
+
+                // Push the modifications to pixels
+                updatePixels()
+
+                // Draw the image to the canvas
+                drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
+            }
+
         }
     }
 
@@ -238,11 +324,18 @@ class scissorTool extends Tool {
         // Save the image
         loadPixels()
 
+        // Re-populate options
+        this.populateOptions()
+
         // Reset this tool
         this.initialize()
     }
 
-    populateOptions() {
+    populateOptions(options = false) {
+        // Empty the footer and append button
+        select("#footer").html("")
+
+        // Create a divider
         let button = document.createElement('div')
         button.id = 'resetButton'
         button.className = 'toolOptionsWrapper toolOptionsButton'
@@ -258,11 +351,96 @@ class scissorTool extends Tool {
 
         // Add button click event listener
         button.onclick = () => {
-            this.reset()
+            this.unselectTool()
         }
 
-        // Empty the footer and append button
-        select("#footer").html("")
+        // Append button to footer
         select("#footer").elt.appendChild(button)
+
+        // Display Width and Height options
+        if (options) {
+            // Create a divider
+            button = document.createElement('div')
+            button.id = 'imageSizeButton'
+            button.className = 'toolOptionsWrapper'
+
+            // Create a text element
+            text = document.createElement('h5')
+            text.className = 'toolOptionsSetting toolOptionsText'
+            text.id = 'imageWidth'
+            text.innerHTML = 'Width'
+
+            // Append text and input to button
+            button.appendChild(text)
+            button.appendChild(this.inputWidth)
+
+            // Append button to footer
+            select("#footer").elt.appendChild(button)
+
+            // Create a divider
+            button = document.createElement('div')
+            button.id = 'imageSizeButton'
+            button.className = 'toolOptionsWrapper'
+
+            // Create a text element
+            text = document.createElement('h5')
+            text.className = 'toolOptionsSetting toolOptionsText'
+            text.id = 'imageHeight'
+            text.innerHTML = 'Height'
+
+            // Append text and input to button
+            button.appendChild(text)
+            button.appendChild(this.inputHeight)
+
+            // Append button to footer
+            select("#footer").elt.appendChild(button)
+        }
+    }
+
+    calculateCornersAndSides() {
+        // Empty this.corners and this.sides
+        this.corners = []
+        this.sides = []
+
+        // Get the coordinates based on the selectedX, selectedY, selectedWidth, and selectedHeight
+        // Get corner coordinates
+        // Top Left Corner (Origin)
+        this.corners.push(createVector(this.selectedX, this.selectedY))
+
+        // Top Right Corner
+        this.corners.push(createVector(this.selectedX + this.selectedWidth, this.selectedY))
+
+        // Bottom Left Corner
+        this.corners.push(createVector(this.selectedX, this.selectedY + this.selectedHeight))
+
+        // Bottom Right Corner
+        this.corners.push(createVector(this.selectedX + this.selectedWidth, this.selectedY + this.selectedHeight))
+
+        // Get the side coordinates
+        // Top Side
+        this.sides.push(createVector((this.corners[0].x + this.corners[1].x) / 2, this.corners[0].y))
+
+        // Right Side
+        this.sides.push(createVector(this.corners[1].x, (this.corners[1].y + this.corners[2].y) / 2))
+
+        // Bottom Side
+        this.sides.push(createVector((this.corners[2].x + this.corners[3].x) / 2, this.corners[2].y))
+
+        // Left Side
+        this.sides.push(createVector(this.corners[2].x, (this.corners[0].y + this.corners[3].y) / 2))
+    }
+
+    updateImage() {
+        // Check if an image is loaded
+        if (this.selectedPixels.width <= 0) return
+
+        // Copy this.original to pixels[] to update the canvas
+        pixels = this.original.slice()
+
+        // Push the modifications to pixels
+        updatePixels()
+
+        // Draw the image to the canvas
+        drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
     }
 }
