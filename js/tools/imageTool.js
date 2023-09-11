@@ -187,6 +187,9 @@ class imageTool extends Tool {
         // Save the image
         loadPixels()
 
+        // Re-populate options
+        this.populateOptions()
+
         // Reset this tool
         this.initialize()
     }

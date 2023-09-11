@@ -11,7 +11,7 @@ function HelperFunctions() {
 		select("#createWidth").elt.value = width
 
 		// Update preview
-		adjustPreview()
+		updateCreateNew()
 
 		// Open the Create New side pop up
 		select("#sideOptionsContainer").elt.classList.remove("sideOptionsContainerHidden")
@@ -43,9 +43,71 @@ function HelperFunctions() {
 	})
 
 	// Edit the Preview on Width/Height/Colour Change
-	select("#createWidth").input(adjustPreview)
-	select("#createHeight").input(adjustPreview)
-	select("#backgroundColour").input(adjustPreview)
+	select("#createWidth").input(updateCreateNew)
+	select("#createHeight").input(updateCreateNew)
+	select("#backgroundColour").input(updateCreateNew)
+
+	// Add presets for the Create New side pop up
+	addPresets()
+}
+
+function addPresets() {
+	// Create value option
+	let option = document.createElement('option')
+	option.value = "custom"
+	option.innerText = "Custom"
+	option.className = "toolOptionsSelectOption"
+	
+	// Add the values to the Create New side pop up
+	select("#presets").elt.appendChild(option)
+
+	// Create value option
+	option = document.createElement('option')
+	option.value = "1920x1080"
+	option.innerText = "Full HD (1920x1080)"
+	option.className = "toolOptionsSelectOption"
+
+	// Add the default values to the Create New side pop up
+	select("#presets").elt.appendChild(option)
+
+	// Create value option
+	option = document.createElement('option')
+	option.value = "2048x2048"
+	option.innerText = "Square (2048x2048)"
+	option.className = "toolOptionsSelectOption"
+
+	// Add the values to the Create New side pop up
+	select("#presets").elt.appendChild(option)
+
+	// Create value option
+	option = document.createElement('option')
+	option.value = "4096x1714"
+	option.innerText = "4K (4096x1714)"
+	option.className = "toolOptionsSelectOption"
+
+	// Add the default values to the Create New side pop up
+	select("#presets").elt.appendChild(option)
+
+	// Update values when the user selects a preset
+	select("#presets").elt.onchange = () => {
+		// Don't do anything if the user selects the custom option
+		if (select("#presets").elt.value == "custom") return
+
+		// Update the values of the Create New side pop up
+		select("#createWidth").elt.value = select("#presets").elt.value.split("x")[0]
+		select("#createHeight").elt.value = select("#presets").elt.value.split("x")[1]
+
+		// Update preview
+		updateCreateNew(false)
+	}
+}
+
+function updateCreateNew(setCustom = true) {
+	// Update presets to custom
+	if (setCustom) select("#presets").elt.selectedIndex = 0
+
+	// Update the preview
+	adjustPreview()
 }
 
 function adjustPreview() {
