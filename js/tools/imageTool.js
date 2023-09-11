@@ -40,6 +40,38 @@ class imageTool extends Tool {
         this.sides = [] // top, right, bottom, left
 
         this.dragging = false
+
+        this.createWidthHeightElements()
+    }
+
+    createWidthHeightElements() {
+        // Create Width Element
+        // Create an input element
+        this.inputWidth = document.createElement('input')
+        this.inputWidth.className = 'textSelector'
+        this.inputWidth.id = 'imageWidthInput'
+        this.inputWidth.type = 'number'
+
+        // Adjust the width in input.oninput
+        this.inputWidth.oninput = () => {
+            this.selectedWidth = this.inputWidth.valueAsNumber
+            this.calculateCornersAndSides()
+            this.updateImage()
+        }
+
+        // Create Height Element
+        // Create an input element
+        this.inputHeight = document.createElement('input')
+        this.inputHeight.className = 'textSelector'
+        this.inputHeight.id = 'imageHeightInput'
+        this.inputHeight.type = 'number'
+
+        // Adjust the height in input.oninput
+        this.inputHeight.oninput = () => {
+            this.selectedHeight = this.inputHeight.valueAsNumber
+            this.calculateCornersAndSides()
+            this.updateImage()
+        }
     }
 
     draw() {
@@ -181,26 +213,13 @@ class imageTool extends Tool {
         // Create a divider
         button = document.createElement('div')
         button.id = 'imageSizeButton'
-        button.className = 'toolOptionsWrapper toolOptionsButton'
+        button.className = 'toolOptionsWrapper'
 
         // Create a text element
         let text = document.createElement('h5')
         text.className = 'toolOptionsSetting toolOptionsText'
         text.id = 'imageWidth'
         text.innerHTML = 'Width'
-
-        // Create an input element
-        this.inputWidth = document.createElement('input')
-        this.inputWidth.className = 'textSelector'
-        this.inputWidth.id = 'imageWidthInput'
-        this.inputWidth.type = 'number'
-
-        // Adjust the width in input.oninput
-        this.inputWidth.oninput = () => {
-            this.selectedWidth = this.inputWidth.valueAsNumber
-            this.calculateCornersAndSides()
-            this.updateImage()
-        }
 
         // Append text and input to button
         button.appendChild(text)
@@ -212,26 +231,13 @@ class imageTool extends Tool {
         // Create a divider
         button = document.createElement('div')
         button.id = 'imageSizeButton'
-        button.className = 'toolOptionsWrapper toolOptionsButton'
+        button.className = 'toolOptionsWrapper'
 
         // Create a text element
         text = document.createElement('h5')
         text.className = 'toolOptionsSetting toolOptionsText'
         text.id = 'imageHeight'
         text.innerHTML = 'Height'
-
-        // Create an input element
-        this.inputHeight = document.createElement('input')
-        this.inputHeight.className = 'textSelector'
-        this.inputHeight.id = 'imageHeightInput'
-        this.inputHeight.type = 'number'
-
-        // Adjust the height in input.oninput
-        this.inputHeight.oninput = () => {
-            this.selectedHeight = this.inputHeight.valueAsNumber
-            this.calculateCornersAndSides()
-            this.updateImage()
-        }
 
         // Append text and input to button
         button.appendChild(text)
