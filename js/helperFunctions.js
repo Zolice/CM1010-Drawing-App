@@ -22,17 +22,17 @@ function HelperFunctions() {
 		select("#sideOptionsContainer").elt.classList.add("sideOptionsContainerHidden")
 	})
 
-	//event handler for the save image button. saves the canvsa to the
+	//event handler for the save image button. saves the canvas to the
 	//local file system.
 	select("#saveImageButton").mouseClicked(function () {
-		saveCanvas("myPicture", "jpg");
+		saveCanvas("myPicture", "jpg")
 	})
 
 	// Create New buttons event handler
 	select("#createButton").mouseClicked(function () {
 		// Create a new canvas and override current canvas
-		let c = createCanvas(select("#createWidth").elt.value, select("#createHeight").elt.value); //subtract 4 for the border
-		c.parent("content");
+		let c = createCanvas(select("#createWidth").elt.value, select("#createHeight").elt.value) //subtract 4 for the border
+		c.parent("content")
 
 		background(select("#backgroundColour").elt.value)
 

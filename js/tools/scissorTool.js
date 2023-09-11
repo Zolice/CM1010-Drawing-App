@@ -108,45 +108,6 @@ class scissorTool extends Tool {
                 // Reset Line Dash
                 drawingContext.setLineDash([0, 0])
             }
-            // Check if the selection is made
-            else {
-                // // Check if the mouse is clicking on the selection
-                // if (mouseX >= this.selectedX && mouseX <= this.selectedX + this.selectedWidth && mouseY >= this.selectedY && mouseY <= this.selectedY + this.selectedHeight) {
-                //     // Check if this is the first instance of clicking the selection
-                //     if (this.clickX <= 0) {
-                //         this.clickX = mouseX
-                //         this.clickY = mouseY
-                //     }
-
-                //     // Move the selection accordingly
-                //     this.selectedX += mouseX - this.clickX
-                //     this.selectedY += mouseY - this.clickY
-
-                //     // Move the corners and side buttons accordingly
-                //     this.corners.forEach(corner => {
-                //         corner.x += mouseX - this.clickX
-                //         corner.y += mouseY - this.clickY
-                //     })
-
-                //     this.sides.forEach(side => {
-                //         side.x += mouseX - this.clickX
-                //         side.y += mouseY - this.clickY
-                //     })
-
-                //     // Set the click values to the current 
-                //     this.clickX = mouseX
-                //     this.clickY = mouseY
-
-                //     // Copy this.edited to pixels[] to update the canvas
-                //     pixels = this.edited.slice()
-
-                //     // Push the modifications to pixels
-                //     updatePixels()
-
-                //     // Draw the image to the canvas
-                //     drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
-                // }
-            }
         }
         // Check if the mouse has been released
         // To check if the mouse was pressed before, check previous mouse values
@@ -155,48 +116,16 @@ class scissorTool extends Tool {
             // Get the stats of the selection
             let pixelDense = pixelDensity()
 
-            // Get the top-left corner of the selection
-            let topLeftX = this.previousMouseX < mouseX ? this.previousMouseX : mouseX
-            let topLeftY = this.previousMouseY < mouseY ? this.previousMouseY : mouseY
-
-            // Save the top-left corner of the selection as the x and y values of the image
-            this.selectedX = topLeftX
-            this.selectedY = topLeftY
-
-            // Get the bottom-right corner of the selection
-            let bottomRightX = this.previousMouseX > mouseX ? this.previousMouseX : mouseX
-            let bottomRightY = this.previousMouseY > mouseY ? this.previousMouseY : mouseY
-
-            // Get the top-right corner of the selection
-            let topRightX = bottomRightX
-            let topRightY = topLeftY
-
-            // Get the bottom-left corner of the selection
-            let bottomLeftX = topLeftX
-            let bottomLeftY = bottomRightY
-
-            // Add the corner coordinates to this.corners[]
-            this.corners = [createVector(topLeftX, topLeftY), createVector(topRightX, topRightY), createVector(bottomRightX, bottomRightY), createVector(bottomLeftX, bottomLeftY)]
-
-            // Get the side coordinates
-            let topX = (topLeftX + topRightX) / 2
-            let topY = topLeftY
-
-            let rightX = bottomRightX
-            let rightY = (topRightY + bottomRightY) / 2
-
-            let bottomX = (bottomLeftX + bottomRightX) / 2
-            let bottomY = bottomRightY
-
-            let leftX = topLeftX
-            let leftY = (topLeftY + bottomLeftY) / 2
-
-            // Add the side coordinates to this.sides[]
-            this.sides = [createVector(topX, topY), createVector(rightX, rightY), createVector(bottomX, bottomY), createVector(leftX, leftY)]
+            // Get the x and y values of the image
+            this.selectedX = this.previousMouseX < mouseX ? this.previousMouseX : mouseX
+            this.selectedY = this.previousMouseY < mouseY ? this.previousMouseY : mouseY
 
             // Get the width and height of the selection
-            this.selectedWidth = bottomRightX - topLeftX
-            this.selectedHeight = bottomRightY - topLeftY
+            this.selectedWidth = mouseX - this.previousMouseX
+            this.selectedHeight = mouseY - this.previousMouseY
+
+            // Find the corners and sides of the selection
+            this.calculateCornersAndSides()
 
             // Update the image size input values
             this.inputWidth.value = this.selectedWidth
@@ -212,15 +141,15 @@ class scissorTool extends Tool {
             // Get the pixels of the selection from this.original
             // Re-create this.selectedPixels using the correct dimensions
             this.selectedPixels = createImage(this.selectedWidth, this.selectedHeight)
-            for (let i = topLeftY; i < topLeftY + this.selectedHeight; i++) {
-                for (let j = topLeftX; j < topLeftX + this.selectedWidth; j++) {
+            for (let i = this.selectedY; i < this.selectedY + this.selectedHeight; i++) {
+                for (let j = this.selectedX; j < this.selectedX + this.selectedWidth; j++) {
                     let index = ((i * width) + j) * pixelDense * 4
                     let r = this.original[index]
                     let g = this.original[index + 1]
                     let b = this.original[index + 2]
                     let a = this.original[index + 3]
 
-                    this.selectedPixels.set(j - topLeftX, i - topLeftY, color(r, g, b, a))
+                    this.selectedPixels.set(j - this.selectedX, i - this.selectedY, color(r, g, b, a))
 
                     // Set the pixel to Default (White)
                     pixels[index] = 255
@@ -241,9 +170,6 @@ class scissorTool extends Tool {
 
             // Draw the image to the canvas
             drawImage(this.selectedPixels, this.selectedX, this.selectedY, this.selectedWidth, this.selectedHeight, this.corners, this.sides, this.designData, true)
-
-            // loadPixels()
-            // updatePixels()
 
             // Add Width and Height options to the footer
             this.populateOptions(true)

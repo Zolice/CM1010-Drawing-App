@@ -2,25 +2,25 @@ class SprayCanTool extends Tool {
     constructor() {
         super()
 
-        this.name = "sprayCanTool";
-        this.icon = "assets/sprayCan.png";
-        this.description = "Spray paint on the canvas with your mouse";
+        this.name = "sprayCanTool"
+        this.icon = "assets/sprayCan.png"
+        this.description = "Spray paint on the canvas with your mouse"
 
         this.initialize()
     }
 
     initialize() {
         // Initialize Values
-        this.count = 13;
-        this.spread = 10;
+        this.count = 13
+        this.spread = 10
     }
 
     draw() {
-        var r = random(5, 10);
+        var r = random(5, 10)
         if (mouseIsPressed && mouseInBounds()) {
             for (var i = 0; i < this.count; i++) {
                 colourP.setStroke()
-                point(random(mouseX - this.spread, mouseX + this.spread), random(mouseY - this.spread, mouseY + this.spread));
+                point(random(mouseX - this.spread, mouseX + this.spread), random(mouseY - this.spread, mouseY + this.spread))
             }
         }
     }

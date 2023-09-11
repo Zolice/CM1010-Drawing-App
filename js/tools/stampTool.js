@@ -300,9 +300,6 @@ class stampTool extends Tool {
         if (file.type === 'image') {
             // Save the image
             this.image = loadImage(file.data, (image) => { this.loadImageCallback(image) })
-
-            // Draw the Image in the middle of the Canvas
-            // image(this.image, width / 2, height / 2)
         }
         // Check if a non-image is selected
         else {
@@ -351,11 +348,11 @@ class stampTool extends Tool {
             case "cloud":
                 // Add the cloud stamp options to the footer
                 extraOptions = this.cloudStampOptions
-                break;
+                break
             case "custom":
                 // Add the custom stamp options to the footer
                 extraOptions = this.customStampOptions
-                break;
+                break
         }
 
         // Empty the footer's current options
@@ -389,22 +386,23 @@ class stampTool extends Tool {
         }
     }
 
+    // Code referenced from p5.js documentation
     // https://p5js.org/examples/form-star.html
     drawStar(x = mouseX, y = mouseY, radius1, radius2, npoints = 5) {
-        let angle = TWO_PI / npoints;
-        let halfAngle = angle / 2.0;
+        let angle = TWO_PI / npoints
+        let halfAngle = angle / 2.0
 
         colourP.setStrokeAndFill()
-        beginShape();
+        beginShape()
         for (let a = 0 - PI / 2; a < 1.5 * PI; a += angle) {
-            let sx = x + cos(a) * radius2;
-            let sy = y + sin(a) * radius2;
-            vertex(sx, sy);
-            sx = x + cos(a + halfAngle) * radius1;
-            sy = y + sin(a + halfAngle) * radius1;
-            vertex(sx, sy);
+            let sx = x + cos(a) * radius2
+            let sy = y + sin(a) * radius2
+            vertex(sx, sy)
+            sx = x + cos(a + halfAngle) * radius1
+            sy = y + sin(a + halfAngle) * radius1
+            vertex(sx, sy)
         }
-        endShape(CLOSE);
+        endShape(CLOSE)
     }
 
     drawCloud(x = mouseX, y = mouseY, width, height) {
