@@ -206,7 +206,7 @@ class scissorTool extends Tool {
             if (this.selectedWidth <= 0 || this.selectedHeight <= 0) {
                 // There is nothing selected, it's a straight line selection
                 // Reset the tool
-                return this.reset()
+                return this.unselectTool()
             }
 
             // Get the pixels of the selection from this.original
